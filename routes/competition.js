@@ -1,6 +1,7 @@
 const router = require('koa-router')();
+const competition = require("../controllers/competition");
 router.prefix('/competition');
 router.get('/', async (ctx, next) => {
-    ctx.body="哈哈哈";
+    await competition.showActivityData(ctx,next);
 });
 module.exports = router;
