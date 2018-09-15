@@ -8,6 +8,15 @@ const logger = require('koa-logger')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const admin = require('./routes/admin')
+const collection = require('./routes/collection')
+const community = require('./routes/community')
+const competition = require('./routes/competition')
+const delicious = require('./routes/delicious')
+const recipes = require('./routes/recipes')
+const login = require('./routes/login')
+const register = require('./routes/register')
+
 
 // error handler
 onerror(app)
@@ -35,6 +44,14 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(admin.routes(), admin.allowedMethods())
+app.use(collection.routes(), collection.allowedMethods())
+app.use(community.routes(), community.allowedMethods())
+app.use(competition.routes(), competition.allowedMethods())
+app.use(delicious.routes(), delicious.allowedMethods())
+app.use(recipes.routes(), recipes.allowedMethods())
+app.use(login.routes(), login.allowedMethods())
+app.use(register.routes(), register.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
