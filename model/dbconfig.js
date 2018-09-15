@@ -7,4 +7,4 @@ const config = {
     database: "mydb"
 };
 //导出模块
-module.exports.options = config;
+module.exports = config;

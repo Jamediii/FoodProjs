@@ -42,9 +42,9 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-app.use(admin.routes(), admin.allowedMethods())
+app.use(index.routes(), index.allowedMethods());
+app.use(users.routes(), users.allowedMethods());
+app.use(admin.routes(), admin.allowedMethods());
 app.use(collection.routes(), collection.allowedMethods())
 app.use(community.routes(), community.allowedMethods())
 app.use(competition.routes(), competition.allowedMethods())
