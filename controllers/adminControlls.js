@@ -11,10 +11,10 @@ module.exports = {
     },
     changeState: async (ctx, next) => {
         try{
-            let query = parseInt(ctx.query.id);
-            // let state = ctx.request.body;
+            let mesg = ctx.params.mesg;
+            let query = ctx.params.dietId;
             //将数据库中的数据进行处理，修改审核状态
-            let ProductState = await adminDAO.updateProductState("审核未通过",query);
+            let ProductState = await adminDAO.updateProductState(mesg,query);
             ctx.body={"code":200,"message":"ok",data:ProductState.affectedRows};
         }catch (e) {
             ctx.body={"code":500,"message":"服务器错误",e};

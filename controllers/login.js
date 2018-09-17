@@ -1,0 +1,28 @@
+//对用户信息进行判断检查
+const loginDAO = require("../model/loginDAO");
+const crypto = require("crypto");
+module.exports = {
+    checkUser: async (ctx, next) => {
+        try {
+            //接收用户传入的登录信息
+            let userPNo = ctx.request.body.userPNo;
+            //加密密码
+            const hash = crypto.createHash("md5");
+            hash.update(ctx.request.body.userPwd);
+            let pwd = hash.digest("hex");//生成32为的加密字符
+            let data = await loginDAO.matchUse();
+            let result = false;
+            for (var i = 0; i < data.length; i++) {
+                if (userPNo == data[i].phoneNo && pwd == data[i].password) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            }
+            console.log(data);
+            ctx.body = {"code": 200, "message": "ok", "data": result};
+        } catch (e) {
+            ctx.body = {"code": 500, "message": "服务器错误", e};
+        }
+    }
+};

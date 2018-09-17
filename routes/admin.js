@@ -8,8 +8,9 @@ router.get('/', async (ctx, next) => {
     await adminCortrolls.showDate(ctx,next);
 });
 //修改作品审核状态的路由
-router.get('/changeState', async (ctx, next) => {
+router.get('/changeState/:mesg/:dietId', async (ctx, next) => {
     //显示作品的全部信息，用于渲染管理员登录之后的页面
     await adminCortrolls.changeState(ctx,next);
 });
+
 module.exports = router;
