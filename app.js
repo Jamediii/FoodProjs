@@ -16,6 +16,8 @@ const delicious = require('./routes/delicious')
 const recipes = require('./routes/recipes')
 const login = require('./routes/login')
 const register = require('./routes/register')
+const comment = require('./routes/comment')
+const praiseNum = require('./routes/praiseNum')
 
 
 // error handler
@@ -52,6 +54,8 @@ app.use(delicious.routes(), delicious.allowedMethods())
 app.use(recipes.routes(), recipes.allowedMethods())
 app.use(login.routes(), login.allowedMethods())
 app.use(register.routes(), register.allowedMethods())
+app.use(comment.routes(), comment.allowedMethods())
+app.use(praiseNum.routes(), praiseNum.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
