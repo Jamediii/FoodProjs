@@ -3,14 +3,11 @@ const userInfo = require('../controllers/usersInfoControlls');
 // 很重要！
 router.prefix('/users');
 
-// router.get('/', function (ctx, next) {
-//   ctx.body = 'this is a users response!'
-// });
-
 // 显示我的页面--基本信息
 router.get('/:userId', async (ctx, next) => {
     await userInfo.getUserInfo(ctx, next);
 })
+
 // 修改自己的基本信息,访问静态页面--- 待定
 
 // 修改后更改自己的基本信息
@@ -18,16 +15,17 @@ router.get('/:userId', async (ctx, next) => {
         await userInfo.updateUserInfo(ctx, next);
     })
 
-        //-------------------------------------------------
+    //-------------------------------------------------
     // 修改用户的头像
     .post('/setting/headPhoto', async (ctx, next) => {
         await userInfo.uploadheadPhoto(ctx, next);
     })
+
     // 修改用户的背景
     .post('/setting/settingWall', async (ctx, next) => {
         await userInfo.uploadWallPhoto(ctx, next);
     })
-        //------------------------------------------------
+    //------------------------------------------------
 
 
     // 获取自己所拥有的粉丝基本数据
@@ -52,7 +50,7 @@ router.get('/:userId', async (ctx, next) => {
     .get('/competition', async (ctx, next) => {
         await userInfo.showJoingame(ctx, next);
     });
-// 获取参赛具体信息 --- 去路由competition/编号   ----------------
+    // 获取参赛具体信息 --- 去路由competition/编号   ----------------
 
 
 module.exports = router;
