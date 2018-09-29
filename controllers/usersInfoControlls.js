@@ -83,27 +83,6 @@ module.exports = {
         }
     },
 
-    // 上传食材表
-    uploadFood: async (ctx, next) => {
-        try {
-            ctx.body = {"code": 200, "message": "ok", data: '食材上传成功'};
-            return await upPhoto.upFood(ctx);
-        }catch (err) {
-            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
-        }
-    },
-
-    // 上传步骤
-    uploadSteps: async (ctx, next) => {
-        try {
-            ctx.body = {"code": 200, "message": "ok", data: '步骤上传成功'};
-            return await upPhoto.upSteps(ctx);
-        }catch (err) {
-            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
-        }
-    },
-
-
     // 粉丝列表-接口
     getFansInfo: async (ctx, next) => {
         const userId = ctx.params.userId;
