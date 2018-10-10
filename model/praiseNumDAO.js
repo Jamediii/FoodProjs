@@ -15,11 +15,11 @@ class DB {
     //根据文章id,修改文章点赞数
     //1、添加点赞数
     addPraiseArtNum(articId){
-        return DAO('call articAddPriNum(?)',[articId]);
+        return DAO('call articleAddPriNum(?)',[articId]);
     }
     //2、取消点赞数
     cancelPraiseArtNum(articId){
-        return DAO('call articCancelPraiseNum(?)',[articId]);
+        return DAO('call articleCancelPraiseNum(?)',[articId]);
     }
 }
 module.exports=new DB();
