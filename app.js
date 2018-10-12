@@ -42,6 +42,7 @@ app.use(cors({
         if (ctx.url === '/test') {
             return false;
         }
+        // 跨域请求地址 --
         return 'http://localhost:8080';
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
