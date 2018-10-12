@@ -12,7 +12,13 @@ class uploadPhoto {
     upPhotoWall(ctx) {
         formidb.parse(ctx.req, async (err, fields, files) => {
             var users = {};
-            formidb.uploadDir = '../public/userPhoto'; // 设置文件下载路径
+            // 获取当前时间
+            let dt = new Date();
+            // 获取时间戳
+            let userDate = Math.round(dt.getTime()/1000);
+            // 获取用户ID
+            let userId = ctx.request.body.userId;
+            formidb.uploadDir = '../public/images/userPhoto'; // 设置文件下载路径
             if (err) {
                 console.log("上传失败" + err.message);
                 return false;
@@ -23,11 +29,11 @@ class uploadPhoto {
                 let fileName = files.settingWall.name;
                 // 获取源文件全路径
                 let srcNew = path.join(__dirname, files.settingWall.path);
-                let destName = `WallPhoto_${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+                let destName = `WallPhoto_${userDate}_${fileName}`;
                 let name = path.join(path.parse(srcNew).dir, destName);
                 fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
                 users = {
-                    id: ctx.request.body.userId,
+                    id: userId,
                     settingWall: destName
                 };
                 userDAO.uploadUserWallPhoto(users);
@@ -36,12 +42,12 @@ class uploadPhoto {
                 let fileName = files.headPhoto.name;
                 // 获取源文件全路径
                 let srcNew = path.join(__dirname, files.headPhoto.path);
-                let destName = `headPhoto_${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+                let destName = `headPhoto_${userDate}_${fileName}`;
                 // 改名
                 let name = path.join(path.parse(srcNew).dir, destName);
                 fs.renameSync(srcNew, name);
                 users = {
-                    id: ctx.request.body.userId,
+                    id: userId,
                     headPhoto: destName
                 };
                 userDAO.uploadUserPhoto(users);
@@ -51,9 +57,15 @@ class uploadPhoto {
 
     // 上传 作品基本信息
     upContent(ctx) {
-        formidb.uploadDir = '../public/dietPhoto'; // 设置文件下载路径
+        formidb.uploadDir = '../public/images/dietPhoto'; // 设置文件下载路径
         // 获取当前时间
-        let date = new Date().toLocaleString();
+        let dt = new Date();
+        let date = dt.toLocaleString();
+        // 获取时间戳
+        let userDate = Math.round(dt.getTime()/1000);
+        // let userHours = date.getHours() > 0 ? date.getHours():'0' + date.getHours();
+        // let userMinutes = date.getMinutes() > 0 ? date.getMinutes():'0' + date.getMinutes();
+        // let userSeconds = date.getSeconds() > 0 ? date.getSeconds():'0' + date.getSeconds();
         // 获取用户id
         let userId = ctx.request.body.userId;
 
@@ -67,7 +79,7 @@ class uploadPhoto {
             let fileName = files.dieltFile0.name;
             // 获取源文件全路径
             let srcNew = path.join(__dirname, src);
-            let destName = `dietPhoto_${userId}_${fileName}`;
+            let destName = `dietPhoto_${userId}_${userDate}_${fileName}`;
             // 改名
             let name = path.join(path.parse(srcNew).dir, destName);
             fs.renameSync(srcNew, name);
@@ -99,7 +111,8 @@ class uploadPhoto {
                         let fileName = files[j].name;
                         // 获取源文件全路径
                         let srcNew = path.join(__dirname, src);
-                        let destName = `stepPhoto_${userId}_${fileName}`;
+                        // 设置图片名称
+                        let destName = `stepPhoto_${userId}_${userDate}_${fileName}`;
                         // 改名
                         let name = path.join(path.parse(srcNew).dir, destName);
                         fs.renameSync(srcNew, name);
