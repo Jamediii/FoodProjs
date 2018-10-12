@@ -17,6 +17,7 @@ module.exports = {
                 if (userPNo == data[i].phoneNo && pwd == data[i].password) {
                     //将用户信息保存在session中
                     ctx.session.accountName=data[i].accountName;
+                    ctx.session.userId=data[i].userId;
                     result = true;
                 } else {
                     result = false;

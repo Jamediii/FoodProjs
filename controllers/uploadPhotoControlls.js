@@ -17,7 +17,7 @@ class uploadPhoto {
             // 获取时间戳
             let userDate = Math.round(dt.getTime()/1000);
             // 获取用户ID
-            let userId = ctx.request.body.userId;
+            let userId = ctx.session.accountName;
             formidb.uploadDir = '../public/images/userPhoto'; // 设置文件下载路径
             if (err) {
                 console.log("上传失败" + err.message);
@@ -66,8 +66,9 @@ class uploadPhoto {
         // let userHours = date.getHours() > 0 ? date.getHours():'0' + date.getHours();
         // let userMinutes = date.getMinutes() > 0 ? date.getMinutes():'0' + date.getMinutes();
         // let userSeconds = date.getSeconds() > 0 ? date.getSeconds():'0' + date.getSeconds();
+
         // 获取用户id
-        let userId = ctx.request.body.userId;
+        let userId = ctx.session.accountName;
 
         formidb.parse(ctx.req, async (err, fields, files) => {
             if (err) {

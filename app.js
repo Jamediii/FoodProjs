@@ -5,6 +5,9 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+// 跨域插件
+const cors = require('koa2-cors');
+
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -32,6 +35,20 @@ app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
   map: {'html':'ejs'}
+}))
+
+app.use(cors({
+    origin: function(ctx) {
+        if (ctx.url === '/test') {
+            return false;
+        }
+        return 'http://localhost:8080';
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
 
 // logger
