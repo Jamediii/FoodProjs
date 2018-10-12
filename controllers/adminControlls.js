@@ -9,6 +9,7 @@ module.exports = {
             ctx.body = {"code": 500, "message": "服务器错误", e};
         }
     },
+    //修改上传作品状态
     changeState: async (ctx, next) => {
         try{
             let mesg = ctx.params.mesg;
