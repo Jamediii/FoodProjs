@@ -12,15 +12,17 @@ module.exports = {
             hash.update(userPwd);
             let pwd = hash.digest("hex");//生成32为的加密字符
             let data = await loginDAO.matchUse();
-        let result = false;
+        let result = {};
             for (var i = 0; i < data.length; i++) {
                 if (userPNo == data[i].phoneNo && pwd == data[i].password) {
                     //将用户信息保存在session中
-                    ctx.session.accountName=data[i].accountName;
-                    ctx.session.userId=data[i].userId;
-                    result = true;
+                   var  userName=data[i].accountName;
+                   var userId=data[i].userId;
+                    // ctx.session.accountName=data[i].accountName;
+                    // ctx.session.userId=data[i].userId;
+                    result = {state:true,name:userName,userId:userId}
                 } else {
-                    result = false;
+                    result = {state:false};
                 }
             }
             console.log(data);
@@ -29,14 +31,14 @@ module.exports = {
             ctx.body = {"code": 500, "message": "服务器错误", e};
         }
     },
-    getMe:async (ctx,next)=> {
-        try{
-            //从session中获取用户数据（登录路由时保存的内容）
-            console.log(ctx.session.accountName);
-            ctx.body = {code:200,message:'ok',data:ctx.session.accountName}
-        }catch (e) {
-            ctx.body = {"code": 500, "message": "服务器错误", e};
-        }
-
-    }
+    // getMe:async (ctx,next)=> {
+    //     try{
+    //         //从session中获取用户数据（登录路由时保存的内容）
+    //         console.log(ctx.session.accountName);
+    //         ctx.body = {code:200,message:'ok',data:ctx.session.accountName}
+    //     }catch (e) {
+    //         ctx.body = {"code": 500, "message": "服务器错误", e};
+    //     }
+    //
+    // }
 };
