@@ -13,7 +13,7 @@ module.exports = {
             var pwd = hash.digest("hex");//生成加密后的32位字符
             var user = {
                 "accountName": ctx.request.body.accountName,
-                "sex": ctx.request.body.sex,
+                // "sex": ctx.request.body.sex,
                 "phoneNo": ctx.request.body.phoneNo,
                 "password": pwd
             };

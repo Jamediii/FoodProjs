@@ -3,7 +3,7 @@ const DAO = require('../model/DAO');
 class RECIPES {
     //显示所有菜谱的全部信息
     getAllRecipe(){
-        return DAO('select recipeName,recipeBrief,recipeCoverImg from recipeDetails')
+        return DAO('select detailsId,recipeName,recipeBrief,recipeCoverImg from recipeDetails')
     }
     //获取菜谱详情
     getOneRecipe(detailsId){

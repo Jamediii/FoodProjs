@@ -4,8 +4,8 @@ const DAO = require("../model/DAO");
 class DB {
     //添加注册的用户
     addUser(user) {
-        return DAO("insert into userinfo(accountName,sex,phoneNo,password) values (?,?,?,?)",
-            [user.accountName, user.sex, user.phoneNo, user.password]);
+        return DAO("insert into userinfo(accountName,phoneNo,password) values (?,?,?)",
+            [user.accountName, user.phoneNo, user.password]);
     }
 
     //修改用户密码

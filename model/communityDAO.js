@@ -14,7 +14,8 @@ class ARTICLE {
 
     //显示所有文章的全部信息
     getAllArticle(){
-        return DAO('select * from article')
+        // return DAO('select * from article')
+        return DAO('select * from articleauthor left join article on article.authorId=articleauthor.authorId')
     }
     //根据articleId得到文章信息
     getOneArticle(articleId){
@@ -56,7 +57,7 @@ class ARTICLE {
     }
     //根据authorId得到作者信息
     getOneAuthor(authorId){
-        return DAO('select * from articleAuthor where authorId = ?',
+        return DAO('select * from articleAuthor, where authorId = ?',
             [authorId])
     }
     //根据articleId删除作者

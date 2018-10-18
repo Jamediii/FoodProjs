@@ -12,20 +12,24 @@ module.exports = {
             hash.update(userPwd);
             let pwd = hash.digest("hex");//生成32为的加密字符
             let data = await loginDAO.matchUse();
-        let result = {};
+            let result = {};
+            var flag = false;
             for (var i = 0; i < data.length; i++) {
                 if (userPNo == data[i].phoneNo && pwd == data[i].password) {
+                    flag = true;
+                    var userName=data[i].accountName;
+                    var userId=data[i].userId;
                     //将用户信息保存在session中
-                   var  userName=data[i].accountName;
-                   var userId=data[i].userId;
                     // ctx.session.accountName=data[i].accountName;
                     // ctx.session.userId=data[i].userId;
-                    result = {state:true,name:userName,userId:userId}
-                } else {
-                    result = {state:false};
+                    result = {state:true,name:userName,userId:userId};
                 }
             }
-            console.log(data);
+            if(!flag){
+                result = {state:false};
+            }
+            // console.log(data);
+            // console.log(result);
             ctx.body = {"code": 200, "message": "ok", "data": result};
         } catch (e) {
             ctx.body = {"code": 500, "message": "服务器错误", e};
