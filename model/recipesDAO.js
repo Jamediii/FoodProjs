@@ -23,7 +23,8 @@ class RECIPES {
     }
     //菜谱按点赞量排序
     orderRecipe(){
-        return DAO('select * from recipeDetails order by recipePraiseNum desc')
+        // return DAO('select * from recipeDetails order by recipePraiseNum desc')
+        return DAO('select * from recipedetails left join userinfo on recipedetails.authorid=userinfo.userId order by recipedetails.recipePraiseNum desc')
     }
     //删除菜谱
     deleteOneRecipe(p_detailsId){
