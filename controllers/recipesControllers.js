@@ -30,6 +30,17 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+    // 获取某一个人的所有菜谱简介
+    getUserBrief:async (ctx,next)=>{
+        // try{
+            let userid = ctx.params.userId;
+            let jsondata = await recipesDAO.getUserBrief(userid);
+        console.log(jsondata);
+        // ctx.body = {"code":200,"message":"ok",data:jsondata}
+        // }catch (err) {
+        //     ctx.body = {"code":500,"message":err.toString(),data:[]}
+        // }
+    },
     //搜索菜谱:模糊查询
     findRecipe:async (ctx,next)=>{
         try {

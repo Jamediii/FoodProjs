@@ -9,10 +9,16 @@ class RECIPES {
     getOneRecipe(detailsId){
         return DAO('call getOneRecipe(?)',[detailsId])
     }
-    //获取菜谱简介
+    //获取一个菜谱简介
     getRecipeBrief(detailsId){
         return DAO('select recipeName,recipeBrief,recipeCoverImg from recipeDetails where detailsId = ?',[detailsId])
     }
+
+    //获取一个人的所有菜谱简介
+    getUserBrief(id){
+        return DAO('select recipeName,recipeBrief,recipeCoverImg from recipeDetails where authorid = ?',[id])
+    }
+
     //查找菜谱：模糊查询
     findRecipe(p_recipeName){
         return DAO('call findRecipe(?)',['%'+ p_recipeName + '%'])

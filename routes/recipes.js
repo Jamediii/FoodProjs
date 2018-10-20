@@ -14,6 +14,10 @@ router.get('/details/:detailsId', async (ctx, next) => {
 router.get('/brief/:detailsId',async (ctx,next)=>{
     await recipesControllers.getRecipeBrief(ctx,next);
 })
+//用户Id获取他的所有菜谱简介
+router.get('/brief/:userId',async (ctx,next)=>{
+    await recipesControllers.getUserBrief(ctx,next)
+})
 //搜索菜谱:模糊查询
 router.post('/find',async (ctx,next)=>{
     await recipesControllers.findRecipe(ctx,next);

@@ -10,38 +10,41 @@ let formidb = new formidable.IncomingForm();
 class uploadPhoto {
     // 上传 头像 + 背景图片
     upPhotoWall(ctx) {
+        // 设置文件下载路径
+        formidb.uploadDir = '../public/images/userPhoto';
+
         formidb.parse(ctx.req, async (err, fields, files) => {
+            if (err || fields.userId) {
+                console.log("上传失败");
+                return false;
+            }
             var users = {};
             // 获取当前时间
             let dt = new Date();
             // 获取时间戳
-            let userDate = Math.round(dt.getTime()/1000);
+            let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/,'');
             // 获取用户ID
-            let userId = ctx.session.accountName;
-            formidb.uploadDir = '../public/images/userPhoto'; // 设置文件下载路径
-            if (err) {
-                console.log("上传失败" + err.message);
-                return false;
-            }
-            if (files.settingWall) {
-                // 获取传入的路径与名字
-                let src = files.settingWall.path;
-                let fileName = files.settingWall.name;
+            let userId = fields.userId;
+            console.log(files);
+            // if (files.settingWall) {
+            //     // 获取传入的路径与名字
+            //     let src = files.settingWall.path;
+            //     let fileName = files.settingWall.name;
+            //     // 获取源文件全路径
+            //     let srcNew = path.join(__dirname, files.settingWall.path);
+            //     let destName = `WallPhoto_${userDate}_${fileName}`;
+            //     let name = path.join(path.parse(srcNew).dir, destName);
+            //     fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
+            //     users = {
+            //         id: userId,
+            //         settingWall: destName
+            //     };
+            //     userDAO.uploadUserWallPhoto(users);
+            // } else {
+                let src = files.file.path;
+                let fileName = files.file.name;
                 // 获取源文件全路径
-                let srcNew = path.join(__dirname, files.settingWall.path);
-                let destName = `WallPhoto_${userDate}_${fileName}`;
-                let name = path.join(path.parse(srcNew).dir, destName);
-                fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
-                users = {
-                    id: userId,
-                    settingWall: destName
-                };
-                userDAO.uploadUserWallPhoto(users);
-            } else {
-                let src = files.headPhoto.path;
-                let fileName = files.headPhoto.name;
-                // 获取源文件全路径
-                let srcNew = path.join(__dirname, files.headPhoto.path);
+                let srcNew = path.join(__dirname, src);
                 let destName = `headPhoto_${userDate}_${fileName}`;
                 // 改名
                 let name = path.join(path.parse(srcNew).dir, destName);
@@ -50,8 +53,9 @@ class uploadPhoto {
                     id: userId,
                     headPhoto: destName
                 };
-                userDAO.uploadUserPhoto(users);
-            }
+            console.log(users);
+            // userDAO.uploadUserPhoto(users);
+            // }
         });
     }
 
@@ -67,15 +71,15 @@ class uploadPhoto {
         // let userMinutes = date.getMinutes() > 0 ? date.getMinutes():'0' + date.getMinutes();
         // let userSeconds = date.getSeconds() > 0 ? date.getSeconds():'0' + date.getSeconds();
 
-        // 获取用户id
-        let userId = ctx.session.accountName;
-
         formidb.parse(ctx.req, async (err, fields, files) => {
             if (err) {
                 console.log("上传失败" + err.message);
                 return false;
             }
             // -----------------------------上传 作品基本信息-----------------------------------
+            // 获取用户id
+            let userId = fields.userId;
+            // 地址
             let src = files.dieltFile0.path;
             let fileName = files.dieltFile0.name;
             // 获取源文件全路径

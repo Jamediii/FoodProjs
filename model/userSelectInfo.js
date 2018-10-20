@@ -3,8 +3,8 @@ var DAO = require('../model/DAO');
 class userSelectInfo {
     // 通过用户id 查询用户的基本信息<账号名+头像+等级ID+经验值+背景墙++++++菜谱+粉丝>
     getUserInfo(userId){
-        //账号名+头像+等级ID+经验值
-        return DAO('select accountName,levelId,expValue,headPhoto,settingWall from userinfo where userId = ?',[userId]);
+        //账号名+性别+头像+等级ID+经验值
+        return DAO('select accountName,sex,levelId,expValue,headPhoto,settingWall from userinfo where userId = ?',[userId]);
     };
 
     // 通过用户id 修改基本信息-----如果用户没修改就传null
