@@ -4,58 +4,73 @@ const fs = require('fs');
 const userDAO = require('../model/userSelectInfo');
 const storageDAO = require('../model/storageDAO');
 
-let formidb = new formidable.IncomingForm();
-
 
 class uploadPhoto {
-    // 上传 头像 + 背景图片
-    upPhotoWall(ctx) {
+    // 上传 头像
+    upPhotoHead(ctx) {
+        let formidb = new formidable.IncomingForm();
         // 设置文件下载路径
         formidb.uploadDir = '../public/images/userPhoto';
 
         formidb.parse(ctx.req, async (err, fields, files) => {
-            if (err || fields.userId) {
+            if (err) {
                 console.log("上传失败");
                 return false;
             }
-            var users = {};
+            let users = {};
             // 获取当前时间
             let dt = new Date();
             // 获取时间戳
-            let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/,'');
+            let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/, '');
             // 获取用户ID
             let userId = fields.userId;
-            console.log(files);
-            // if (files.settingWall) {
-            //     // 获取传入的路径与名字
-            //     let src = files.settingWall.path;
-            //     let fileName = files.settingWall.name;
-            //     // 获取源文件全路径
-            //     let srcNew = path.join(__dirname, files.settingWall.path);
-            //     let destName = `WallPhoto_${userDate}_${fileName}`;
-            //     let name = path.join(path.parse(srcNew).dir, destName);
-            //     fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
-            //     users = {
-            //         id: userId,
-            //         settingWall: destName
-            //     };
-            //     userDAO.uploadUserWallPhoto(users);
-            // } else {
-                let src = files.file.path;
-                let fileName = files.file.name;
-                // 获取源文件全路径
-                let srcNew = path.join(__dirname, src);
-                let destName = `headPhoto_${userDate}_${fileName}`;
-                // 改名
-                let name = path.join(path.parse(srcNew).dir, destName);
-                fs.renameSync(srcNew, name);
-                users = {
-                    id: userId,
-                    headPhoto: destName
-                };
-            console.log(users);
-            // userDAO.uploadUserPhoto(users);
-            // }
+            let src = files.file.path;
+            let fileName = files.file.name;
+            // 获取源文件全路径
+            let srcNew = path.join(__dirname, src);
+            let destName = `headPhoto_${userDate}_${fileName}`;
+            // 改名
+            let name = path.join(path.parse(srcNew).dir, destName);
+            fs.renameSync(srcNew, name);
+            users = {
+                id: userId,
+                headPhoto: destName
+            };
+            userDAO.uploadUserPhoto(users);
+        });
+    }
+
+    // 上传 背景图片
+    upPhotoWall(ctx) {
+        let formidb = new formidable.IncomingForm();
+        // 设置文件下载路径
+        formidb.uploadDir = '../public/images/userPhoto';
+
+        formidb.parse(ctx.req, async (err, fields, files) => {
+            if (err) {
+                console.log("上传失败");
+                return false;
+            }
+            let users = {};
+            // 获取当前时间
+            let dt = new Date();
+            // 获取时间戳
+            let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/, '');
+            // 获取用户ID
+            let userId = fields.userId;
+            let src = files.file.path;
+            let fileName = files.file.name;
+            // 获取源文件全路径
+            let srcNew = path.join(__dirname, src);
+            let destName = `WallPhoto_${userDate}_${fileName}`;
+            let name = path.join(path.parse(srcNew).dir, destName);
+            fs.renameSync(srcNew, name);
+            users = {
+                id: userId,
+                settingWall: destName
+            };
+            userDAO.uploadUserWallPhoto(users);
+
         });
     }
 
@@ -66,7 +81,7 @@ class uploadPhoto {
         let dt = new Date();
         let date = dt.toLocaleString();
         // 获取时间戳
-        let userDate = Math.round(dt.getTime()/1000);
+        let userDate = Math.round(dt.getTime() / 1000);
         // let userHours = date.getHours() > 0 ? date.getHours():'0' + date.getHours();
         // let userMinutes = date.getMinutes() > 0 ? date.getMinutes():'0' + date.getMinutes();
         // let userSeconds = date.getSeconds() > 0 ? date.getSeconds():'0' + date.getSeconds();
@@ -101,7 +116,7 @@ class uploadPhoto {
             };
 
             // 上传 食材基本信息 ---------------------------------------------
-            let foodlist =  JSON.parse(fields.foodlist); // []
+            let foodlist = JSON.parse(fields.foodlist); // []
 
             //------------------------------------- 上传 步骤信息  -----------------------------------------
             let step = JSON.parse(fields.steplist);
@@ -123,9 +138,9 @@ class uploadPhoto {
                         fs.renameSync(srcNew, name);
 
                         let stepString = {
-                            steps: j.toString().replace(/[^0-9]/g,""),
-                            stepsName:destName,
-                            stepDetail:photoDetail
+                            steps: j.toString().replace(/[^0-9]/g, ""),
+                            stepsName: destName,
+                            stepDetail: photoDetail
                         };
                         stepArray.push(stepString);
                     }
@@ -134,7 +149,7 @@ class uploadPhoto {
             let steplist = {
                 stepAll: stepArray
             };
-            storageDAO(dietlist,foodlist,steplist);
+            storageDAO(dietlist, foodlist, steplist);
         });
     }
 }

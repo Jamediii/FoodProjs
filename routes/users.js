@@ -11,7 +11,7 @@ router.get('/:userId', async (ctx, next) => {
 // 修改自己的基本信息,访问静态页面--- 待定
 
 // 修改后更改自己的基本信息
-    .post('/setting', async (ctx, next) => {
+    .post('/setting/userInfo', async (ctx, next) => {
         await userInfo.updateUserInfo(ctx, next);
     })
 

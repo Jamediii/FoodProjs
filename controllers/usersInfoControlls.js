@@ -29,7 +29,7 @@ module.exports = {
     // 用户头像 / 背景图片上传 - 接口
     uploadheadPhoto: async (ctx, next) => {
         try {
-            await upPhoto.upPhotoWall(ctx);
+            await upPhoto.upPhotoHead(ctx);
             ctx.body = {"code": 200, "message": "ok", data: '头像上传成功'};
         }catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
