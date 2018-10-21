@@ -20,6 +20,7 @@ const recipes = require('./routes/recipes')
 const login = require('./routes/login')
 const register = require('./routes/register')
 const operat = require('./routes/operat');
+const praiseNum = require('./routes/praiseNum');
 
 
 // error handler
@@ -72,6 +73,7 @@ app.use(recipes.routes(), recipes.allowedMethods())
 app.use(login.routes(), login.allowedMethods())
 app.use(register.routes(), register.allowedMethods())
 app.use(operat.routes(), operat.allowedMethods())
+app.use(praiseNum.routes(), praiseNum.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

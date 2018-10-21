@@ -16,8 +16,10 @@ router.get('/:userId', async (ctx, next) => {
     })
 
     // 点击收藏菜谱id--cookies方式收藏
-    .get('/:recipesId', async (ctx, netx) => {
-        await userInfo.setCollection(ctx, next);
+.get('/setCollection/:detailsId', async (ctx, next) => {
+    console.log("111");
+    await userInfo.setCollection(ctx, next);
+
     })
 
     // 获取自己本地收藏菜谱编号显示菜谱数据-->

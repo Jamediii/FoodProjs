@@ -4,9 +4,10 @@ module.exports = {
     //添加菜谱点赞数
     addRecPriseNum: async (ctx, next) => {
         try {
-            let detailsId = ctx.request.body.detailsId;
-            await praiseNumDAO.addPraiseRecNum(detailsId);
-            ctx.body = {"code": 200, "message": "点赞成功"};
+        let dId = ctx.request.body.detailsId;
+        console.log(dId);
+        await praiseNumDAO.addPraiseRecNum(dId);
+        ctx.body = {"code": 200, "message": "点赞成功"};
         } catch (e) {
             ctx.body = {"code": 500, "message": "点赞失败", e};
         }
