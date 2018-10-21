@@ -33,6 +33,7 @@ router.post('/findbyuid',async (ctx,next)=>{
 router.get('/classify/:recipeClassifyId',async(ctx,next)=>{
     await recipesControllers.getClassifyRecipe(ctx,next);
 })
+
 //菜谱按点赞量排序
 router.get('/order',async (ctx,next)=>{
     await recipesControllers.orderRecipe(ctx,next);
