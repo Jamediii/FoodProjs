@@ -2,53 +2,62 @@ const DAO = require('../model/DAO');
 
 class RECIPES {
     //显示所有菜谱的全部信息
-    getAllRecipe(){
+    getAllRecipe() {
         return DAO('select detailsId,recipeName,recipeBrief,recipeCoverImg from recipeDetails')
     }
+
     //获取菜谱详情
-    getOneRecipe(detailsId){
-        return DAO('call getOneRecipe(?)',[detailsId])
-    }
-    //获取一个菜谱简介
-    getRecipeBrief(detailsId){
-        return DAO('select recipeName,recipeBrief,recipeCoverImg from recipeDetails where detailsId = ?',[detailsId])
+    getOneRecipe(detailsId) {
+        return DAO('call getOneRecipe(?)', [detailsId])
     }
 
-    //获取一个人的所有菜谱简介
-    getUserBrief(id){
-        return DAO('select recipeName,recipeBrief,recipeCoverImg from recipeDetails where authorid = ?',[id])
+    //获取菜谱简介
+    getRecipeBrief(detailsId) {
+        return DAO('select recipeName,recipeBrief,recipeCoverImg from recipeDetails where detailsId = ?', [detailsId])
     }
 
     //查找菜谱：模糊查询
-    findRecipe(p_recipeName){
-        return DAO('call findRecipe(?)',['%'+ p_recipeName + '%'])
+    findRecipe() {
+        // return DAO('call findRecipe(?)',['%'+ p_recipeName + '%'])
+        return DAO('select detailsId,userId,accountName,recipeName from recipedetails left join userinfo on authorid = userId GROUP BY accountName;', [])
     }
+
+    //根据用户Id查找作者对应的食谱
+    findRecipe2(userId) {
+        // return DAO('call findRecipe(?)',['%'+ p_recipeName + '%'])
+        return DAO('select detailsId,recipeCoverImg,accountName,recipeName,recipeBrief,recipePraiseNum from recipedetails left join userinfo on authorid = userId where userId=?', [userId])
+    }
+
     //根据分类编号显示该分类下的菜谱id
-    getClassifyRecipe(p_recipeClassifyId){
-        return DAO('call getClassifyRecipe(?)',[p_recipeClassifyId])
+    getClassifyRecipe(p_recipeClassifyId) {
+        return DAO('select headPhoto,detailsId,recipeCoverImg,recipeBrief,recipePraiseNum,accountName from recipedetails left join userinfo on recipedetails.authorid = userinfo.userId where recipeClassifyId  = ? ;', [p_recipeClassifyId])
     }
+
     //菜谱按点赞量排序
-    orderRecipe(){
+    orderRecipe() {
         // return DAO('select * from recipeDetails order by recipePraiseNum desc')
         return DAO('select * from recipedetails left join userinfo on recipedetails.authorid=userinfo.userId order by recipedetails.recipePraiseNum desc')
     }
+
     //删除菜谱
-    deleteOneRecipe(p_detailsId){
-        return DAO('call deleteRecipe(?)',[p_detailsId])
+    deleteOneRecipe(p_detailsId) {
+        return DAO('call deleteRecipe(?)', [p_detailsId])
     }
 
 
     //获取用户上传且通过审核的全部菜谱的简介信息
-    getUseAllRecipe(){
+    getUseAllRecipe() {
         return DAO('select dietTitle,dietPhoto,dietIntroduce from dietList where productState = "已审核"')
     }
+
     //根据id获取用户菜谱全部详情（审核通过）
-    getUserRecipe(p_dietId){
-        return DAO('call getUserRecipe(?)',[p_dietId])
+    getUserRecipe(p_dietId) {
+        return DAO('call getUserRecipe(?)', [p_dietId])
     }
+
     //获取用户菜谱简介
-    getUserRecipeBrief(dietId){
-        return DAO('select dietTitle,dietPhoto,dietIntroduce from dietList where productState = "已审核" and dietId = ?',[dietId])
+    getUserRecipeBrief(dietId) {
+        return DAO('select dietTitle,dietPhoto,dietIntroduce from dietList where productState = "已审核" and dietId = ?', [dietId])
     }
 }
 

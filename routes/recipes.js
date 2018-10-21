@@ -22,6 +22,13 @@ router.get('/brief/:userId',async (ctx,next)=>{
 router.post('/find',async (ctx,next)=>{
     await recipesControllers.findRecipe(ctx,next);
 })
+
+//根据用户ID搜索菜谱
+router.post('/findbyuid',async (ctx,next)=>{
+    await recipesControllers.findRecipe2(ctx,next);
+})
+
+
 //根据分类id显示该分类下的全部菜谱id
 router.get('/classify/:recipeClassifyId',async(ctx,next)=>{
     await recipesControllers.getClassifyRecipe(ctx,next);
