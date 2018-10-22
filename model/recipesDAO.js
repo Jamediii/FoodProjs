@@ -47,7 +47,7 @@ class RECIPES {
 
     //获取用户上传且通过审核的全部菜谱的简介信息
     getUseAllRecipe() {
-        return DAO('select dietTitle,dietPhoto,dietIntroduce from dietList where productState = "已审核"')
+        return DAO('select dietId,accountName,dietTitle,dietPhoto,dietIntroduce from dietList,userinfo where dietList.userId = userinfo.userId and productState = "已审核"')
     }
 
     //根据id获取用户菜谱全部详情（审核通过）

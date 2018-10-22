@@ -76,12 +76,12 @@ class uploadPhoto {
 
     // 上传 作品基本信息
     upContent(ctx) {
+        let formidb = new formidable.IncomingForm();
         formidb.uploadDir = '../public/images/dietPhoto'; // 设置文件下载路径
         // 获取当前时间
         let dt = new Date();
-        let date = dt.toLocaleString();
         // 获取时间戳
-        let userDate = Math.round(dt.getTime() / 1000);
+        let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/, '');
         // let userHours = date.getHours() > 0 ? date.getHours():'0' + date.getHours();
         // let userMinutes = date.getMinutes() > 0 ? date.getMinutes():'0' + date.getMinutes();
         // let userSeconds = date.getSeconds() > 0 ? date.getSeconds():'0' + date.getSeconds();
