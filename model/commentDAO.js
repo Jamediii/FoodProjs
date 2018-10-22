@@ -7,7 +7,7 @@ class DB {
     }
     //根据菜谱id查询评论内容
     getCommContent(id){
-        return DAO('select * from comment where detailsId = ?',[id]);
+        return DAO('select commentId,accountName,userComment from comment left join userinfo on comment.userId = userinfo.userId where detailsId = ?',[id]);
     }
 
     //根据菜谱详情id添加评论

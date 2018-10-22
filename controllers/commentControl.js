@@ -15,8 +15,10 @@ module.exports = {
     //获取评论表内容
     getCommContent: async (ctx, next) => {
         try {
-            let query = ctx.request.body.menu_Id;
-            let data = await commentDAO.getCommContent(query);
+            let query1 = ctx.request.body.menu_Id;
+            let data = await commentDAO.getCommContent(query1);
+            console.log(query1);
+            console.log(data);
             ctx.body = {"code": 200, "message": "ok", data: data};
         } catch (e) {
             ctx.body = {"code": 500, "message": "服务器错误", e};
@@ -34,7 +36,7 @@ module.exports = {
             };
             console.log(comment);
             await commentDAO.addComment(comment);
-            ctx.body = {"code": 200, "message": "数据插入成功"};
+            ctx.body = {"code": 200, "message": "数据插入成功",data:true};
         } catch (e) {
             ctx.body = {"code": 500, "message": "数据插入失败", e};
         }

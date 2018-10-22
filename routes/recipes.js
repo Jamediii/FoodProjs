@@ -38,6 +38,7 @@ router.get('/classify/:recipeClassifyId',async(ctx,next)=>{
 router.get('/order',async (ctx,next)=>{
     await recipesControllers.orderRecipe(ctx,next);
 })
+
 //删除菜谱
 router.get('/delete/:detailsId',async (ctx,next)=>{
     await recipesControllers.deleteOneRecipe(ctx,next);

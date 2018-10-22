@@ -97,18 +97,20 @@ module.exports = {
     // ---------问题------------
     // 收藏食谱-接口
     setCollection: async (ctx, next) => {
-        let recipesId = ctx.params.detailsId;
-        console.log("花湖");
-        // try {
+        const recipesId = ctx.request.body.detailsId;
+        console.log(recipesId);//41
+        try {
             if (!ctx.cookies.get('recipesIds')) {
-                ctx.cookies.set('recipesIds',recipesId);
+                ctx.cookies.set('recipesIds',recipesId,{
+                    maxAge: 5000,
+                });
             }else {
                 ctx.cookies.set('recipesIds',ctx.cookies.get('recipesIds') + ',' + recipesId);
             }
-            ctx.body = {"code": 200, "message": "ok", data:'收藏成功'};
-        // }catch (err) {
-        //     ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
-        // }
+            ctx.body = {"code": 200, "message": "ok111", data:'收藏成功'};
+        }catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
     },
 
     // 显示收藏列表-接口 --- 获取本地cookies

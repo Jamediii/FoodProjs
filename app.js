@@ -21,6 +21,7 @@ const login = require('./routes/login')
 const register = require('./routes/register')
 const operat = require('./routes/operat');
 const praiseNum = require('./routes/praiseNum');
+const comment = require('./routes/comment');
 
 
 // error handler
@@ -74,6 +75,7 @@ app.use(login.routes(), login.allowedMethods())
 app.use(register.routes(), register.allowedMethods())
 app.use(operat.routes(), operat.allowedMethods())
 app.use(praiseNum.routes(), praiseNum.allowedMethods())
+app.use(comment.routes(), comment.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
