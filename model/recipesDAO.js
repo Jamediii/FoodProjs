@@ -59,6 +59,11 @@ class RECIPES {
     getUserRecipeBrief(dietId) {
         return DAO('select dietTitle,dietPhoto,dietIntroduce from dietList where productState = "已审核" and dietId = ?', [dietId])
     }
+
+    // 获取基本图片
+    getBasicPhoto() {
+        return DAO('select * from basic');
+    }
 }
 
 module.exports = new RECIPES();

@@ -58,4 +58,10 @@ router.get('/users/brief/:dietId',async (ctx,next)=>{
     await recipesControllers.getUserRecipeBrief(ctx,next);
 })
 
+// 获取基本图片
+router.get('/basicPhoto', async (ctx, next) => {
+    await recipesControllers.getBasicPhoto(ctx,next);
+})
+
+
 module.exports = router;

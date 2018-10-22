@@ -110,7 +110,7 @@ class uploadPhoto {
                     introduce: fields.dieltSyon, //简介
                     time: fields.dieltTime,// 制作时间
                     weight: fields.dieltWeight,// 制作分量<人份>
-                    releaseTime: date,// 发布时间
+                    releaseTime: userDate,// 发布时间
                 }, // {}
                 dietPhotoPaths: destName,
             };

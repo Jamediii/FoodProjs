@@ -1,4 +1,6 @@
 const recipesDAO = require('../model/recipesDAO');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     //显示所有菜谱的全部信息
@@ -115,6 +117,24 @@ module.exports = {
             let dietId = ctx.params.dietId;
             let jsondata = await recipesDAO.getUserRecipeBrief(dietId);
             ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+    // 获取作品制作界面的基本图片
+    getBasicPhoto: async (ctx, next) => {
+        try{
+            // 获取到名称
+            let jsondata = await recipesDAO.getBasicPhoto();
+                let bPhoto = jsondata[0].basicPhoto;
+                let sPhoto = jsondata[0].stepsPhoto;
+                let basicPhoto = path.join("http://127.0.0.1:3000/images",bPhoto);
+                let stepsPhoto = path.join("http://127.0.0.1:3000/images",sPhoto);
+                let basic = {
+                    basicPhoto,stepsPhoto
+                };
+                ctx.body = {"code": 200, "message": "ok", data: basic}
+
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
