@@ -30,8 +30,9 @@ class RECIPES {
 
     //根据分类编号显示该分类下的菜谱id
     getClassifyRecipe(p_recipeClassifyId) {
-        return DAO('select headPhoto,detailsId,recipeCoverImg,recipeBrief,recipePraiseNum,accountName from recipedetails left join userinfo on recipedetails.authorid = userinfo.userId where recipeClassifyId  = ? ;', [p_recipeClassifyId])
+        return DAO('select recipeClassifyName,headPhoto,detailsId,recipeCoverImg,recipeBrief,recipePraiseNum,accountName from  recipeclassify right join recipedetails on recipeclassify.recipeClassifyId = recipedetails.recipeClassifyId left join userinfo on recipedetails.authorid = userinfo.userId where recipeclassify.recipeClassifyId  = ? ;', [p_recipeClassifyId])
     }
+
 
     //菜谱按点赞量排序
     orderRecipe() {
