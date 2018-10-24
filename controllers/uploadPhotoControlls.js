@@ -70,7 +70,6 @@ class uploadPhoto {
                 settingWall: destName
             };
             userDAO.uploadUserWallPhoto(users);
-
         });
     }
 

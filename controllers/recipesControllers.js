@@ -41,17 +41,17 @@ module.exports = {
             //     recipeName:ctx.request.body.rsName,
             //     authodName:ctx.request.body.raName
             // };
-        // console.log(rearch);
-        let jsondata = await recipesDAO.findRecipe();
-        // console.log(jsondata);
-        ctx.body = {"code": 200, "message": "ok", data: jsondata}
+            // console.log(rearch);
+            let jsondata = await recipesDAO.findRecipe();
+            // console.log(jsondata);
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
 
     //根据用户的id查询相应的菜谱
-    findRecipe2 :async (ctx, next) => {
+    findRecipe2: async (ctx, next) => {
         try {
             var id = ctx.request.body.userId;
             let jsondata = await recipesDAO.findRecipe2(id);
@@ -135,17 +135,28 @@ module.exports = {
     },
     // 获取作品制作界面的基本图片
     getBasicPhoto: async (ctx, next) => {
-        try{
+        try {
             // 获取到名称
             let jsondata = await recipesDAO.getBasicPhoto();
-                let bPhoto = jsondata[0].basicPhoto;
-                let sPhoto = jsondata[0].stepsPhoto;
-                let basicPhoto = path.join("http://127.0.0.1:3000/images",bPhoto);
-                let stepsPhoto = path.join("http://127.0.0.1:3000/images",sPhoto);
-                let basic = {
-                    basicPhoto,stepsPhoto
-                };
-                ctx.body = {"code": 200, "message": "ok", data: basic}
+            console.log(jsondata);
+            // 菜谱制作界面的基本图片
+            let bPhoto = jsondata[0].basicPhoto;
+            let sPhoto = jsondata[0].stepsPhoto;
+            // 用户界面的基本图片显示
+            let uHeadPhtot = jsondata[0].userHeadPhoto;
+            let uSettingWall = jsondata[0].userSettingWall;
+            // 拼接 菜谱制作界面----
+            let basicPhoto = path.join("http://127.0.0.1:3000/images", bPhoto);
+            let stepsPhoto = path.join("http://127.0.0.1:3000/images", sPhoto);
+            // 拼接 用户界面----
+            let userHeadPhoto = path.join("http://127.0.0.1:3000/images", basicPhoto);
+            let userSettingWall = path.join("http://127.0.0.1:3000/images", uSettingWall);
+            // console.log(userSettingWall);
+            let basic = {
+                basicPhoto, stepsPhoto, userHeadPhoto, userSettingWall
+            };
+            console.log(basic);
+            ctx.body = {"code": 200, "message": "ok", data: basic}
 
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
