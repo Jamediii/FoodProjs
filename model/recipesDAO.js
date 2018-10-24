@@ -61,6 +61,11 @@ class RECIPES {
         return DAO('select dietTitle,dietPhoto,dietIntroduce from dietList where productState = "已审核" and dietId = ?', [dietId])
     }
 
+    // 获取recipedetails表中的根据用户Id获取的菜谱简介
+    getUserRecipetails(authorid) {
+        return DAO('select  detailsId,recipeName,recipeBrief,recipeCoverImg,recipePraiseNum from recipedetails where authorid = ?', [authorid]);
+    }
+
     // 获取基本图片
     getBasicPhoto() {
         return DAO('select * from basic');

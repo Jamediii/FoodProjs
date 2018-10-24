@@ -31,7 +31,7 @@ module.exports = {
         try {
             await upPhoto.upPhotoHead(ctx);
             ctx.body = {"code": 200, "message": "ok", data: '头像上传成功'};
-        }catch (err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
@@ -40,7 +40,7 @@ module.exports = {
         try {
             await upPhoto.upPhotoWall(ctx);
             ctx.body = {"code": 200, "message": "ok", data: '头像上传成功'};
-        }catch (err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
@@ -50,12 +50,7 @@ module.exports = {
         const userId = ctx.params.userId;
         try {
             let recipes = await userDAO.getUserRecipes(userId);
-            let length = recipes.length;
-            if (length > 0) {
-                ctx.body = {"code": 200, "message": "ok", data: recipes};
-            }else {
-                ctx.body = {"code": 200, "message": "ok", data: '你还未拥有自己的菜谱'};
-            }
+            ctx.body = {"code": 200, "message": "ok", data: recipes};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
@@ -78,7 +73,7 @@ module.exports = {
             // 食谱
             await upPhoto.upContent(ctx);
             ctx.body = {"code": 200, "message": "ok", data: '食谱上传成功'};
-        }catch (err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
@@ -101,14 +96,14 @@ module.exports = {
         console.log(recipesId);//41
         try {
             if (!ctx.cookies.get('recipesIds')) {
-                ctx.cookies.set('recipesIds',recipesId,{
+                ctx.cookies.set('recipesIds', recipesId, {
                     maxAge: 5000,
                 });
-            }else {
-                ctx.cookies.set('recipesIds',ctx.cookies.get('recipesIds') + ',' + recipesId);
+            } else {
+                ctx.cookies.set('recipesIds', ctx.cookies.get('recipesIds') + ',' + recipesId);
             }
-            ctx.body = {"code": 200, "message": "ok111", data:'收藏成功'};
-        }catch (err) {
+            ctx.body = {"code": 200, "message": "ok111", data: '收藏成功'};
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
@@ -126,7 +121,7 @@ module.exports = {
                     detailObj.push(detail);
                 }
                 ctx.body = {"code": 200, "message": "ok", data: detailObj};
-            }else {
+            } else {
                 ctx.body = {"code": 200, "message": "ok", data: '你还未收藏任何菜谱！'};
             }
         } catch (err) {
@@ -140,10 +135,10 @@ module.exports = {
         try {
             if (!ctx.cookies.get('activityIds')) {
                 const activityId = user.activityId;
-                await ctx.cookies.set('activityIds',activityId);
+                await ctx.cookies.set('activityIds', activityId);
 
-            }else {
-                await ctx.cookies.set('activityIds',ctx.cookies.get('activityIds') + ',' + activityId);
+            } else {
+                await ctx.cookies.set('activityIds', ctx.cookies.get('activityIds') + ',' + activityId);
             }
             //---- 做数据表的事
             await userDAO.setUserJoin(user);
@@ -161,7 +156,7 @@ module.exports = {
             const activity = ctx.params;
             await userDAO.castUserWork(activity);
             ctx.body = {"code": 200, "message": "ok", data: '作品投递成功'};
-        }catch (err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
@@ -179,10 +174,10 @@ module.exports = {
                     actObj.push(activity);
                 }
                 ctx.body = {"code": 200, "message": "ok", data: actObj};
-            }else {
+            } else {
                 ctx.body = {"code": 200, "message": "ok", data: '你还未参加任何活动！'};
             }
-        }catch(err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     }

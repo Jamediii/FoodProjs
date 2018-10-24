@@ -58,6 +58,10 @@ router.get('/users/details/:dietId', async (ctx, next) => {
 router.get('/users/brief/:dietId',async (ctx,next)=>{
     await recipesControllers.getUserRecipeBrief(ctx,next);
 })
+// 获取recipedetails表中的根据用户Id获取的菜谱简介
+router.get('/users/:userId',async (ctx,next)=>{
+    await recipesControllers.getUserRecipetails(ctx,next);
+})
 
 // 获取基本图片
 router.get('/basicPhoto', async (ctx, next) => {

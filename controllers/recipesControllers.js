@@ -123,6 +123,16 @@ module.exports = {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
+    // 获取recipedetails表中的根据用户Id获取的菜谱简介
+    getUserRecipetails: async (ctx, next) => {
+        try {
+            let authorid = ctx.params.userId;
+            let jsondata = await recipesDAO.getUserRecipetails(authorid);
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
     // 获取作品制作界面的基本图片
     getBasicPhoto: async (ctx, next) => {
         try{

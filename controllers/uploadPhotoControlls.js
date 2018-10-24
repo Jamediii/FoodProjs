@@ -82,9 +82,6 @@ class uploadPhoto {
         let dt = new Date();
         // 获取时间戳
         let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/, '');
-        // let userHours = date.getHours() > 0 ? date.getHours():'0' + date.getHours();
-        // let userMinutes = date.getMinutes() > 0 ? date.getMinutes():'0' + date.getMinutes();
-        // let userSeconds = date.getSeconds() > 0 ? date.getSeconds():'0' + date.getSeconds();
 
         formidb.parse(ctx.req, async (err, fields, files) => {
             if (err) {
@@ -109,7 +106,7 @@ class uploadPhoto {
                     title: fields.dieltTitle,// 标题
                     introduce: fields.dieltSyon, //简介
                     time: fields.dieltTime,// 制作时间
-                    weight: fields.dieltWeight,// 制作分量<人份>
+                    weight: fields.dieltPeo,// 制作分量<人份>
                     releaseTime: userDate,// 发布时间
                 }, // {}
                 dietPhotoPaths: destName,
@@ -123,7 +120,7 @@ class uploadPhoto {
 
             let stepArray = [];
             for (let i = 0; i < step.length; i++) {
-                let photoName = step[i].stepPhoto;
+                let photoName = step[i].stepPHName;
                 for (let j in files) {
                     if (files[j].name == photoName) {
                         let photoDetail = step[i].stepContent;
