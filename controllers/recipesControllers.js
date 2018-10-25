@@ -138,7 +138,6 @@ module.exports = {
         try {
             // 获取到名称
             let jsondata = await recipesDAO.getBasicPhoto();
-            console.log(jsondata);
             // 菜谱制作界面的基本图片
             let bPhoto = jsondata[0].basicPhoto;
             let sPhoto = jsondata[0].stepsPhoto;
@@ -146,16 +145,15 @@ module.exports = {
             let uHeadPhtot = jsondata[0].userHeadPhoto;
             let uSettingWall = jsondata[0].userSettingWall;
             // 拼接 菜谱制作界面----
-            let basicPhoto = path.join("http://127.0.0.1:3000/images", bPhoto);
-            let stepsPhoto = path.join("http://127.0.0.1:3000/images", sPhoto);
+            let basicPhoto = `http://127.0.0.1:3000/images/${bPhoto}`;
+            let stepsPhoto = `http://127.0.0.1:3000/images/${sPhoto}`;
             // 拼接 用户界面----
-            let userHeadPhoto = path.join("http://127.0.0.1:3000/images", basicPhoto);
-            let userSettingWall = path.join("http://127.0.0.1:3000/images", uSettingWall);
+            let userHeadPhoto = `http://127.0.0.1:3000/images/${uHeadPhtot}`;
+            let userSettingWall = `http://127.0.0.1:3000/images/${uSettingWall}`;
             // console.log(userSettingWall);
             let basic = {
                 basicPhoto, stepsPhoto, userHeadPhoto, userSettingWall
             };
-            console.log(basic);
             ctx.body = {"code": 200, "message": "ok", data: basic}
 
         } catch (err) {

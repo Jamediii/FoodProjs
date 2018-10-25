@@ -9,6 +9,12 @@ module.exports = {
         const userId = ctx.params.userId;
         try {
             const userInfo = await userDAO.getUserInfo(userId);
+            if (userInfo[0].headPhoto.length > 0) {
+                userInfo[0].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${userInfo[0].headPhoto}`
+            }
+            if (userInfo[0].settingWall.length > 0) {
+                userInfo[0].settingWall = `http://127.0.0.1:3000/images/userPhoto/${userInfo[0].settingWall}`
+            }
             ctx.body = {"code": 200, "message": "ok", data: userInfo};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
@@ -49,8 +55,23 @@ module.exports = {
     getRecipes: async (ctx, next) => {
         const userId = ctx.params.userId;
         try {
+            // 总的菜谱
             let recipes = await userDAO.getUserRecipes(userId);
-            ctx.body = {"code": 200, "message": "ok", data: recipes};
+            // 过审菜谱
+            let passRecipes = [];
+            // 未过审菜谱
+            let noReviewed = [];
+            for(let i = 0; i < recipes.length; i++) {
+                // 做拼接
+                recipes[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${recipes[i].dietPhoto}`;
+
+                if (recipes[i].productState === '未审核') {
+                    noReviewed.push(recipes[i]);
+                }else {
+                    passRecipes.push(recipes[i])
+                }
+            }
+            ctx.body = {"code": 200, "message": "ok", data: [passRecipes,noReviewed]};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
@@ -89,6 +110,41 @@ module.exports = {
         }
     },
 
+    // 查询是否有关注
+    queryFans:async (ctx, next) => {
+        const userId = ctx.params.userId;
+        const fansId = ctx.params.fansId;
+        try{
+            const fans = await userDAO.queryFans(userId, fansId);
+            ctx.body = {"code": 200, "message": "ok", data: fans};
+        }catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
+    },
+
+
+    // 关注
+    joinFans: async (ctx, next) => {
+        const userId = ctx.params.userId;
+        const fansId = ctx.params.fansId;
+        try{
+            const fans = await userDAO.joinFans(userId, fansId);
+            ctx.body = {"code": 200, "message": "ok", data: fans};
+        }catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
+    },
+
+    abolishFans: async (ctx, next) => {
+        const userId = ctx.params.userId;
+        const fansId = ctx.params.fansId;
+        try{
+            const fans = await userDAO.abolishFans(userId, fansId);
+            ctx.body = {"code": 200, "message": "ok", data: fans};
+        }catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
+    },
     // ---------问题------------
     // 收藏食谱-接口
     setCollection: async (ctx, next) => {

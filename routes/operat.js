@@ -9,9 +9,12 @@ router.get('/:userId', async (ctx, next) => {
     await userInfo.getRecipes(ctx, next)
 })
 
-// 过审菜谱---去路由recipes/菜谱编号
-// 未审核菜谱详情 + 过审失败菜谱详情---根据具体自己的菜谱编号
-    .get('/:userId/:recipesId', async (ctx, next) => {
+    // 获取所有菜谱
+    .get('/reviewed/:userId',async (ctx, next) => {
+        await userInfo.getReviewed(ctx, next);
+    })
+    // 未审核菜谱详情 + 过审失败菜谱详情---根据具体自己的菜谱编号
+    .get('/noreviewed/:userId/:recipesId', async (ctx, next) => {
         await userInfo.getRecipesId(ctx, next);
     })
 

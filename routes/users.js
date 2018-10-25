@@ -33,9 +33,21 @@ router.get('/:userId', async (ctx, next) => {
         await userInfo.getFansInfo(ctx, next);
     })
     // 获取粉丝具体信息 --- 去路由users/:userId   吧？---------------
-
     //--------问题：怎么通过路由传到后台哟---------
 
+    // 查询是否有关注
+    .get('/queryFans/:userId/:fansId', async (ctx, next) => {
+        await userInfo.queryFans(ctx, next);
+    })
+
+    // 关注
+    .get('/joinFans/:userId/:fansId', async (ctx, next) => {
+        await userInfo.joinFans(ctx, next);
+    })
+    // 取关
+    .get('/abolishFans/:userId/:fansId', async (ctx, next) => {
+        await userInfo.abolishFans(ctx, next);
+    })
     // 用户报名参赛------
     .get('/joinGame/:userId/:activityId', async (ctx, next) => {
         await userInfo.setJoingame(ctx, next);

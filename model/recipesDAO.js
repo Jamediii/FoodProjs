@@ -13,7 +13,7 @@ class RECIPES {
 
     //获取菜谱简介
     getRecipeBrief(detailsId) {
-        return DAO('select recipeName,recipeBrief,recipeCoverImg from recipeDetails where detailsId = ?', [detailsId])
+        return DAO('select detailsId,recipeName,recipeBrief,recipeCoverImg from recipeDetails where detailsId = ?', [detailsId])
     }
 
     //查找菜谱：模糊查询

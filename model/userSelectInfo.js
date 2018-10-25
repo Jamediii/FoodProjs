@@ -4,12 +4,12 @@ class userSelectInfo {
     // 通过用户id 查询用户的基本信息<账号名+头像+等级ID+经验值+背景墙++++++菜谱+粉丝>
     getUserInfo(userId){
         //账号名+性别+头像+等级ID+经验值
-        return DAO('select accountName,sex,levelId,expValue,headPhoto,settingWall from userinfo where userId = ?',[userId]);
+        return DAO('select accountName,sex,phoneNo,levelId,expValue,headPhoto,settingWall from userinfo where userId = ?',[userId]);
     };
 
     // 通过用户id 修改基本信息-----如果用户没修改就传null
     updateUserInfo(user) {
-        return DAO('update userinfo set accountName =?,sex=?,phoneNo=? where userId = ?',[user.accountName,user.sex,user.phoneNo,user.userId]);
+        return DAO('update userinfo set accountName =?,sex=?,phoneNo=? where userId = ?',[user.name,user.sex,user.phoneNo,user.userId]);
     };
 
     // 用户上传 头像 / 背景
@@ -22,9 +22,9 @@ class userSelectInfo {
         return DAO('update userinfo set settingWall = ? where userId = ?',[user.settingWall,user.id]);
     }
 
-    // 用户菜谱的基本信息---显示(作品标题,作品图片,作品时间,作品简介)
+    // 用户菜谱的基本信息---显示(作品标题,作品图片,作品时间,作品简介,状态)
     getUserRecipes(userId) {
-        return DAO('select dietTitle,dietPhoto,dietTime,dietIntroduce from dietlist where userId = ?',[userId]);
+        return DAO('select dietId,dietTitle,dietPhoto,dietTime,dietIntroduce,productState from dietlist where userId = ?',[userId]);
     };
 
     // 过审菜谱详情
@@ -42,6 +42,21 @@ class userSelectInfo {
     getUserFans(userId) {
         return DAO('select userId,accountName,headPhoto from userinfo where userId in (select fansId from fans where userId = ?)',[userId]);
     };
+
+    // 查询是否有关注
+    queryFans(userId, fansId) {
+        return DAO('select * from fans where userId = ? and fansId = ?',[userId, fansId]);
+    }
+
+    // 关注
+    joinFans(userId, fansId) {
+        return DAO('insert into fans(userId, fansId) values(? ,?)',[userId, fansId]);
+    }
+    // 取关
+    abolishFans(userId, fansId) {
+        //DELETE FROM 表名称 WHERE 列名称 = 值
+        return DAO('delete from fans where userId = ? and fansId = ?',[userId, fansId]);
+    }
 
     // 设置用户报名参赛 --- userId + activityId
     setUserJoin(user) {
