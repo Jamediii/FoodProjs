@@ -45,7 +45,7 @@ app.use(cors({
             return false;
         }
         // 跨域请求地址 --
-        return 'http://10.40.4.20:8080';
+        return 'http://localhost:8080';
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,

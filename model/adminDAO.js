@@ -12,6 +12,11 @@ class DB {
         return DAO("update dietlist set dietlist.productState=? where dietlist.dietId=?;", [stateMessage,id]);
     }
 
+    //获取管理员信息
+    getAdminInfo(){
+        return DAO('SELECT * FROM myadmin',[]);
+    }
+
 }
 
 module.exports = new DB();

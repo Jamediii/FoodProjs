@@ -1,0 +1,14 @@
+/*右边主体部分的样式*/
+html, body, div, span, p {
+    padding: 0;
+    margin: 0;
+}
+
+#main {
+    width: 100%;
+    float: left;
+}
+#main .center li{
+    width: 100%;
+    height: 100%;
+}
