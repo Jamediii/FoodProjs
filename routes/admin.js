@@ -12,7 +12,6 @@ router.get('/', async (ctx, next) => {
 router.post('/login', async (ctx, next) => {
     //显示作品的全部信息，用于渲染管理员登录之后的页面
    await adminCortrolls.checkAdmin(ctx,next);
-
 });
 
 

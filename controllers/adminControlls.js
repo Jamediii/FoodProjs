@@ -25,20 +25,24 @@ module.exports = {
     checkAdmin:async (ctx,next)=>{
         try {
             //接收用户传入的登录信息
-            let admin = ctx.request.body;
-            // let adminName = ctx.request.body.adminName;
-            // let adminPwd = ctx.request.body.adminPwd;
+            // let admin = ctx.request.body;
+            let adminName = ctx.request.body.adminName;
+            let adminPwd = ctx.request.body.adminPwd;
             let data = await adminDAO.getAdminInfo();
             var flag = false;
             for (var i = 0; i < data.length; i++) {
-                if (admin.adminName == data[i].workNum && admin.adminPwd == data[i].adminPwd) {
+                if (adminName == data[i].workNum && adminPwd == data[i].adminPwd) {
                     flag = true
                 }
             }
             if(!flag){
                 flag = false;
             }
-            ctx.body = {"code": 200, "message": "ok", "data": flag};
+            // ctx.body = {"code": 200, "message": "ok", "data": flag};
+            if(flag){
+              await ctx.render("main",{data:flag})
+            }
+
         } catch (e) {
             ctx.body = {"code": 500, "message": "服务器错误", e};
         }
