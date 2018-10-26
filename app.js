@@ -7,7 +7,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 // 跨域插件
 const cors = require('koa2-cors');
-const staticServer = require('koa-static');
+// const staticServer = require('koa-static');
 
 
 const index = require('./routes/index')
@@ -38,7 +38,8 @@ app.use(views(__dirname + '/views', {
     // map: {'html':'ejs'}
     extension: 'ejs'
 }))
-app.use(staticServer(__dirname, 'public'));
+// app.use(staticServer(__dirname, 'public'));
+app.use(require('koa-static')(__dirname+'/public'));
 app.use(cors({
     origin: function (ctx) {
         if (ctx.url === '/test') {
@@ -46,6 +47,7 @@ app.use(cors({
         }
         // 跨域请求地址 --
         return 'http://localhost:8080';
+        // return 'http://10.40.4.20:8080';
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,

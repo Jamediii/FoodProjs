@@ -8,13 +8,15 @@ module.exports = {
     getUserInfo: async (ctx, netx) => {
         const userId = ctx.params.userId;
         try {
-            const userInfo = await userDAO.getUserInfo(userId);
-            if (userInfo[0].headPhoto.length > 0) {
-                userInfo[0].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${userInfo[0].headPhoto}`
+            let userInfo = await userDAO.getUserInfo(userId);
+            if (!/^http:\/\//.test(userInfo[0].headPhoto)) {
+                userInfo[0].headPhoto = `http://localhost:3000/images/userPhoto/${userInfo[0].headPhoto}`
             }
-            if (userInfo[0].settingWall.length > 0) {
-                userInfo[0].settingWall = `http://127.0.0.1:3000/images/userPhoto/${userInfo[0].settingWall}`
+            if (!/^http:\/\//.test(userInfo[0].settingWall)) {
+                console.log(userInfo[0].settingWall);
+                userInfo[0].settingWall = `http://localhost:3000/images/userPhoto/${userInfo[0].settingWall}`
             }
+            console.log(userInfo);
             ctx.body = {"code": 200, "message": "ok", data: userInfo};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};

@@ -108,6 +108,16 @@ module.exports = {
         try {
             let dietId = ctx.params.dietId;
             let jsondata = await recipesDAO.getUserRecipe(dietId);
+            console.log(jsondata);
+            if (!/^https:/.test(jsondata[0][0].dietPhoto)) {
+                jsondata[0][0].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${jsondata[0][0].dietPhoto}`
+            }
+            for (let i = 0; i < jsondata[2].length; i++) {
+                if (!/^https:/.test(jsondata[2][i].stepPhoto)) {
+                    jsondata[2][i].stepPhoto = `http://127.0.0.1:3000/images/dietPhoto/${jsondata[2][i].stepPhoto}`
+                }
+            }
+            console.log(jsondata);
             ctx.body = {"code": 200, "message": "ok", data: jsondata}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
@@ -145,11 +155,11 @@ module.exports = {
             let uHeadPhtot = jsondata[0].userHeadPhoto;
             let uSettingWall = jsondata[0].userSettingWall;
             // 拼接 菜谱制作界面----
-            let basicPhoto = `http://127.0.0.1:3000/images/${bPhoto}`;
-            let stepsPhoto = `http://127.0.0.1:3000/images/${sPhoto}`;
+            let basicPhoto = `http://localhost:3000/images/${bPhoto}`;
+            let stepsPhoto = `http://localhost:3000/images/${sPhoto}`;
             // 拼接 用户界面----
-            let userHeadPhoto = `http://127.0.0.1:3000/images/${uHeadPhtot}`;
-            let userSettingWall = `http://127.0.0.1:3000/images/${uSettingWall}`;
+            let userHeadPhoto = `http://localhost:3000/images/${uHeadPhtot}`;
+            let userSettingWall = `http://localhost:3000/images/${uSettingWall}`;
             // console.log(userSettingWall);
             let basic = {
                 basicPhoto, stepsPhoto, userHeadPhoto, userSettingWall
