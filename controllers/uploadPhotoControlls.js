@@ -21,7 +21,7 @@ class uploadPhoto {
             // 获取当前时间
             let dt = new Date();
             // 获取时间戳
-            let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/, '');
+            let userDate = dt.toLocaleString().replace(/[^0-9]/g, '');
             // 获取用户ID
             let userId = fields.userId;
             let src = files.file.path;
@@ -36,7 +36,7 @@ class uploadPhoto {
                 id: userId,
                 headPhoto: destName
             };
-            userDAO.uploadUserPhoto(users);
+            // userDAO.uploadUserPhoto(users);
         });
     }
 
@@ -55,7 +55,7 @@ class uploadPhoto {
             // 获取当前时间
             let dt = new Date();
             // 获取时间戳
-            let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/, '');
+            let userDate = dt.toLocaleString().replace(/[^0-9]/g, '');
             // 获取用户ID
             let userId = fields.userId;
             let src = files.file.path;
@@ -80,7 +80,7 @@ class uploadPhoto {
         // 获取当前时间
         let dt = new Date();
         // 获取时间戳
-        let userDate = dt.toLocaleString().split(' ')[0].replace(/[^/d]/, '');
+        let userDate = dt.toLocaleString().replace(/[^0-9]/g, '');
 
         formidb.parse(ctx.req, async (err, fields, files) => {
             if (err) {
@@ -106,7 +106,7 @@ class uploadPhoto {
                     introduce: fields.dieltSyon, //简介
                     time: fields.dieltTime,// 制作时间
                     weight: fields.dieltPeo,// 制作分量<人份>
-                    releaseTime: userDate,// 发布时间
+                    releaseTime: dt.toLocaleString().split(' ')[0],// 发布时间
                 }, // {}
                 dietPhotoPaths: destName,
             };

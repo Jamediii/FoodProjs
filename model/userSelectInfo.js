@@ -24,7 +24,7 @@ class userSelectInfo {
 
     // 用户菜谱的基本信息---显示(作品标题,作品图片,作品时间,作品简介,状态)
     getUserRecipes(userId) {
-        return DAO('select dietId,dietTitle,dietPhoto,dietTime,dietIntroduce,productState from dietlist where userId = ?',[userId]);
+        return DAO('select dietId,dietTitle,dietPhoto,dietTime,dietIntroduce,releaseTime,productState from dietlist where userId = ?',[userId]);
     };
 
     // 过审菜谱详情
