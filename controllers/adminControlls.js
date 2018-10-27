@@ -5,7 +5,8 @@ module.exports = {
             //获取用户作品表全部信息
             let userPro = await adminDAO.getUserproc();
             // ctx.body = {"code": 200, "message": "ok", data: userPro};
-            ctx.render("auditRecipes",{data:userPro});
+            console.log(userPro);
+           await ctx.render("auditRecipes",{title:"hahah",data:userPro});
         } catch (e) {
             ctx.body = {"code": 500, "message": "服务器错误", e};
         }
@@ -24,7 +25,7 @@ module.exports = {
     },
     //判断管理员验证登录
     checkAdmin:async (ctx,next)=>{
-        // try {
+        try {
             //接收用户传入的登录信息
             // let admin = ctx.request.body;
             let adminName = ctx.request.body.adminName;
@@ -39,13 +40,15 @@ module.exports = {
             if(!flag){
                 flag = false;
             }
-            // ctx.body = {"code": 200, "message": "ok", "data": flag};
-            if(flag){
-              await ctx.render("main",{data:flag})
-            }
+            ctx.body = {"code": 200, "message": "ok", "data": flag};
+            // if(flag){
+            //   await ctx.render("main",{data:flag})
+            // }else{
+            //     ctx.body = {"code": 200, "message": "ok", "data": 404};
+            // }
 
-        // } catch (e) {
-        //     ctx.body = {"code": 500, "message": "服务器错误", e};
-        // }
+        } catch (e) {
+            ctx.body = {"code": 500, "message": "服务器错误", e};
+        }
     }
 };
