@@ -106,7 +106,6 @@ module.exports = {
         const userId = ctx.params.userId;
         try {
             const fans = await userDAO.getUserFans(userId);
-            console.log(fans);
             ctx.body = {"code": 200, "message": "ok", data: fans};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
