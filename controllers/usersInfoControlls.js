@@ -9,10 +9,10 @@ module.exports = {
         const userId = ctx.params.userId;
         try {
             let userInfo = await userDAO.getUserInfo(userId);
-            if (!/^http:\/\//.test(userInfo[0].headPhoto)) {
+            if (!/^http/.test(userInfo[0].headPhoto)) {
                 userInfo[0].headPhoto = `http://localhost:3000/images/userPhoto/${userInfo[0].headPhoto}`
             }
-            if (!/^http:\/\//.test(userInfo[0].settingWall)) {
+            if (!/^http/.test(userInfo[0].settingWall)) {
                 console.log(userInfo[0].settingWall);
                 userInfo[0].settingWall = `http://localhost:3000/images/userPhoto/${userInfo[0].settingWall}`
             }
