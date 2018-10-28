@@ -24,10 +24,22 @@ module.exports = {
     },
     //获取菜谱简介
     getRecipeBrief: async (ctx, next) => {
+        let detailsIdArray = JSON.parse(ctx.params.detailsId);
+        let length = detailsIdArray.length;
         try {
-            let detailsId = ctx.params.detailsId;
-            let jsondata = await recipesDAO.getRecipeBrief(detailsId);
-            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+            if (length > 0) {
+                let detailObj = [];
+                for (var i = 0; i < length; i++) {
+                    let jsondata = await recipesDAO.getRecipeBrief(detailsIdArray[i]);
+                    if (!/^http/.test(jsondata[0].recipeCoverImg)) {
+                        jsondata[0].dietPhoto = `http://127.0.0.1:3000/dietPhoto/${jsondata[0].recipeCoverImg}`
+                    }
+                    await detailObj.push(jsondata);
+                }
+                ctx.body = {"code": 200, "message": "ok", data: detailObj};
+            } else {
+                ctx.body = {"code": 200, "message": "ok", data: []};
+            }
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }

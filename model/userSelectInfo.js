@@ -35,7 +35,7 @@ class userSelectInfo {
 
     // 通过菜谱id 获取用户菜谱基本信息<菜谱名称+菜谱图片+菜谱简述+菜谱状态>
     getUserCollection(recipesId) {
-        return DAO('select dieTitle,dietPhoto,dietIntroduce,productState from dietlist where detailsId = ?',[recipesId]);
+        return DAO('select dietId,dietTitle,dietPhoto,dietIntroduce,productState from dietlist where dietId = ?',[recipesId]);
     };
 
     // 通过用户id 获取用户粉丝信息(用户id+用户名+用户头像)
