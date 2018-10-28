@@ -15,13 +15,13 @@ router.get('/:userId', async (ctx, next) => {
         await userInfo.getRecipesId(ctx, next);
     })
 
-    // 点击收藏菜谱id--cookies方式收藏
-    .post('/setcoll', async (ctx, next) => {
-        await userInfo.setCollection(ctx, next);
-    })
+    // // 点击收藏菜谱id--cookies方式收藏
+    // .post('/setcoll', async (ctx, next) => {
+    //     await userInfo.setCollection(ctx, next);
+    // })
 
     // 获取自己本地收藏菜谱编号显示菜谱数据-->
-    .get('/setCollection', async (ctx, next) => {
+    .get('/getCollection/:collIdArray', async (ctx, next) => {
         await userInfo.getCollection(ctx, next);
     })
 

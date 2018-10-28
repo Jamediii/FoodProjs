@@ -149,38 +149,40 @@ module.exports = {
     },
     // ---------问题------------
     // 收藏食谱-接口
-    setCollection: async (ctx, next) => {
-        const recipesId = ctx.request.body.detailsId;
-        console.log(recipesId);//41
-        try {
-            if (!ctx.cookies.get('recipesIds')) {
-                ctx.cookies.set('recipesIds', recipesId, {
-                    maxAge: 5000,
-                });
-            } else {
-                ctx.cookies.set('recipesIds', ctx.cookies.get('recipesIds') + ',' + recipesId);
-            }
-            ctx.body = {"code": 200, "message": "ok111", data: '收藏成功'};
-        } catch (err) {
-            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
-        }
-    },
+    // setCollection: async (ctx, next) => {
+    //     const recipesId = ctx.request.body.detailsId;
+    //     console.log(recipesId);//41
+    //     try {
+    //         if (!ctx.cookies.get('recipesIds')) {
+    //             ctx.cookies.set('recipesIds', recipesId, {
+    //                 maxAge: 5000,
+    //             });
+    //         } else {
+    //             ctx.cookies.set('recipesIds', ctx.cookies.get('recipesIds') + ',' + recipesId);
+    //         }
+    //         ctx.body = {"code": 200, "message": "ok111", data: '收藏成功'};
+    //     } catch (err) {
+    //         ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+    //     }
+    // },
 
     // 显示收藏列表-接口 --- 获取本地cookies
     getCollection: async (ctx, next) => {
-        const detailsIds = ctx.cookie.get('recipesIds');// 字符串
-        const dtIdsArray = detailsIds.split(',');// 数组
+        const dtIdsArray = JSON.parse(ctx.params.collIdArray);
         let length = dtIdsArray.length;
         try {
             if (length > 0) {
                 let detailObj = [];
                 for (var i = 0; i < length; i++) {
-                    const detail = await userDAO.getUserCollection(dtIdsArray[i]);
-                    detailObj.push(detail);
+                    let detail = await userDAO.getUserCollection(dtIdsArray[i]);
+                    if (!/^http/.test(detail[0].dietPhoto)) {
+                        detail[0].dietPhoto = `http://127.0.0.1:3000/dietPhoto/${detail[0].dietPhoto}`
+                    }
+                    await detailObj.push(detail);
                 }
                 ctx.body = {"code": 200, "message": "ok", data: detailObj};
             } else {
-                ctx.body = {"code": 200, "message": "ok", data: '你还未收藏任何菜谱！'};
+                ctx.body = {"code": 200, "message": "ok", data: []};
             }
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
