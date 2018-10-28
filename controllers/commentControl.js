@@ -17,8 +17,13 @@ module.exports = {
         try {
             let query1 = ctx.request.body.menu_Id;
             let data = await commentDAO.getCommContent(query1);
-            console.log(query1);
             console.log(data);
+            for(var i =0;i < data.length;i++){
+                if (!/^http/.test(data[i].headPhoto)) {
+                    data[i].headPhoto = `http://localhost:3000/images/userPhoto/${data[i].headPhoto}`
+                }
+            }
+
             ctx.body = {"code": 200, "message": "ok", data: data};
         } catch (e) {
             ctx.body = {"code": 500, "message": "服务器错误", e};
@@ -32,7 +37,8 @@ module.exports = {
             let comment = {
                 userId: ctx.request.body.userId,
                 userComment: ctx.request.body.userComment,
-                detailsId: ctx.request.body.detailsId
+                detailsId: ctx.request.body.detailsId,
+                commentTime: ctx.request.body.commentTime
             };
             console.log(comment);
             await commentDAO.addComment(comment);

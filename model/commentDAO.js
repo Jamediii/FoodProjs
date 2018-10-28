@@ -7,13 +7,13 @@ class DB {
     }
     //根据菜谱id查询评论内容
     getCommContent(id){
-        return DAO('select commentId,accountName,userComment from comment left join userinfo on comment.userId = userinfo.userId where detailsId = ?',[id]);
+        return DAO('select commentTime,headPhoto,commentId,accountName,userComment from comment left join userinfo on comment.userId = userinfo.userId where detailsId = ? GROUP BY commentTime DESC',[id]);
     }
 
     //根据菜谱详情id添加评论
     addComment(comment){
-        return DAO('insert into comment(userId,userComment,detailsId) values(?,?,?)',
-            [comment.userId,comment.userComment,comment.detailsId]);
+        return DAO('insert into comment(userId,userComment,detailsId,commentTime) values(?,?,?,?)',
+            [comment.userId,comment.userComment,comment.detailsId,comment.commentTime]);
     }
 
     //根据评论表ID修改评论
