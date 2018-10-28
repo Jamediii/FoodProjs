@@ -36,7 +36,7 @@ class uploadPhoto {
                 id: userId,
                 headPhoto: destName
             };
-            // userDAO.uploadUserPhoto(users);
+            userDAO.uploadUserPhoto(users);
         });
     }
 

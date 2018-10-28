@@ -9,14 +9,12 @@ module.exports = {
         const userId = ctx.params.userId;
         try {
             let userInfo = await userDAO.getUserInfo(userId);
-            if (!/^http:\/\//.test(userInfo[0].headPhoto)) {
+            if (!/^http/.test(userInfo[0].headPhoto)) {
                 userInfo[0].headPhoto = `http://localhost:3000/images/userPhoto/${userInfo[0].headPhoto}`
             }
-            if (!/^http:\/\//.test(userInfo[0].settingWall)) {
-                console.log(userInfo[0].settingWall);
+            if (!/^http/.test(userInfo[0].settingWall)) {
                 userInfo[0].settingWall = `http://localhost:3000/images/userPhoto/${userInfo[0].settingWall}`
             }
-            console.log(userInfo);
             ctx.body = {"code": 200, "message": "ok", data: userInfo};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
@@ -64,14 +62,16 @@ module.exports = {
             // 未过审菜谱
             let noReviewed = [];
             for(let i = 0; i < recipes.length; i++) {
-                // 做拼接
-                recipes[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${recipes[i].dietPhoto}`;
-
+                if(!/^http/.test(recipes[i].dietPhoto)) {
+                    // 做拼接
+                    recipes[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${recipes[i].dietPhoto}`;
+                }
                 if (recipes[i].productState === '未审核') {
                     noReviewed.push(recipes[i]);
                 }else {
                     passRecipes.push(recipes[i])
                 }
+
             }
             ctx.body = {"code": 200, "message": "ok", data: [passRecipes,noReviewed]};
         } catch (err) {
@@ -106,6 +106,7 @@ module.exports = {
         const userId = ctx.params.userId;
         try {
             const fans = await userDAO.getUserFans(userId);
+            console.log(fans);
             ctx.body = {"code": 200, "message": "ok", data: fans};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};

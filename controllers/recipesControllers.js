@@ -162,8 +162,8 @@ module.exports = {
             let basicPhoto = `http://localhost:3000/images/${bPhoto}`;
             let stepsPhoto = `http://localhost:3000/images/${sPhoto}`;
             // 拼接 用户界面----
-            let userHeadPhoto = `http://localhost:3000/images/${uHeadPhtot}`;
-            let userSettingWall = `http://localhost:3000/images/${uSettingWall}`;
+            let userHeadPhoto = `http://localhost:3000/images/userPhoto/${uHeadPhtot}`;
+            let userSettingWall = `http://localhost:3000/images/userPhoto/${uSettingWall}`;
             // console.log(userSettingWall);
             let basic = {
                 basicPhoto, stepsPhoto, userHeadPhoto, userSettingWall
