@@ -5,7 +5,6 @@ module.exports = {
     addRecPriseNum: async (ctx, next) => {
         try {
         let dId = ctx.request.body.detailsId;
-        console.log(dId);
         await praiseNumDAO.addPraiseRecNum(dId);
         ctx.body = {"code": 200, "message": "点赞成功"};
         } catch (e) {
