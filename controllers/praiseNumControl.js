@@ -43,5 +43,20 @@ module.exports = {
         } catch (e) {
             ctx.body = {"code": 500, "message": "取消点赞失败", e};
         }
+    },
+
+    // 获取粉丝数量的排名
+    fansRanking: async (ctx, next) => {
+        try {
+            let activity = await praiseNumDAO.fansRanking();
+            for (let i = 0; i < activity.length; i++) {
+                if (!/^http/.test(activity[i].headPhoto)) {
+                    activity[i].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${activity[i].headPhoto}`;
+                }
+            }
+            ctx.body = {"code": 200, "message": "ok", data: activity};
+        } catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
     }
 };

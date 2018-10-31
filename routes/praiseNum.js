@@ -20,5 +20,8 @@ router.post('/addArtPraNum', async (ctx, next) => {
 //取消文章点赞
 router.post('/cancelArtPraNum', async (ctx, next) => {
     await praiseNumDAO.cancelArtPriseNum(ctx,next);
-});
+})
+    .get('/rankingUser',async (ctx, next) => {
+        await praiseNumDAO.fansRanking(ctx, next);
+    });
 module.exports = router;

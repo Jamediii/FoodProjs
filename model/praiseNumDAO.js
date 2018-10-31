@@ -21,5 +21,10 @@ class DB {
     cancelPraiseArtNum(articId){
         return DAO('call articleCancelPraiseNum(?)',[articId]);
     }
+
+    // 粉丝排名
+    fansRanking() {
+        return DAO('select count(1) as fansNum,fansId,accountName,sex,headPhoto from fans left join userinfo on userinfo.userId=fans.fansId group by fans.fansId order by fansNum desc');
+    }
 }
 module.exports=new DB();

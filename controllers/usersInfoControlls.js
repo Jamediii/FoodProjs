@@ -61,19 +61,19 @@ module.exports = {
             let passRecipes = [];
             // 未过审菜谱
             let noReviewed = [];
-            for(let i = 0; i < recipes.length; i++) {
-                if(!/^http/.test(recipes[i].dietPhoto)) {
+            for (let i = 0; i < recipes.length; i++) {
+                if (!/^http/.test(recipes[i].dietPhoto)) {
                     // 做拼接
                     recipes[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${recipes[i].dietPhoto}`;
                 }
                 if (recipes[i].productState === '未审核') {
                     noReviewed.push(recipes[i]);
-                }else {
+                } else {
                     passRecipes.push(recipes[i])
                 }
 
             }
-            ctx.body = {"code": 200, "message": "ok", data: [passRecipes,noReviewed]};
+            ctx.body = {"code": 200, "message": "ok", data: [passRecipes, noReviewed]};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
@@ -113,13 +113,13 @@ module.exports = {
     },
 
     // 查询是否有关注
-    queryFans:async (ctx, next) => {
+    queryFans: async (ctx, next) => {
         const userId = ctx.params.userId;
         const fansId = ctx.params.fansId;
-        try{
+        try {
             const fans = await userDAO.queryFans(userId, fansId);
             ctx.body = {"code": 200, "message": "ok", data: fans};
-        }catch (err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
@@ -129,10 +129,10 @@ module.exports = {
     joinFans: async (ctx, next) => {
         const userId = ctx.params.userId;
         const fansId = ctx.params.fansId;
-        try{
+        try {
             const fans = await userDAO.joinFans(userId, fansId);
             ctx.body = {"code": 200, "message": "ok", data: fans};
-        }catch (err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
@@ -140,10 +140,10 @@ module.exports = {
     abolishFans: async (ctx, next) => {
         const userId = ctx.params.userId;
         const fansId = ctx.params.fansId;
-        try{
+        try {
             const fans = await userDAO.abolishFans(userId, fansId);
             ctx.body = {"code": 200, "message": "ok", data: fans};
-        }catch (err) {
+        } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },

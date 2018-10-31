@@ -125,6 +125,10 @@ module.exports = {
         try {
             let dietId = ctx.params.dietId;
             let jsondata = await recipesDAO.getUserRecipe(dietId);
+            console.log(jsondata);
+            if (!/^https:/.test(jsondata[0][0].headPhoto)) {
+                jsondata[0][0].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${jsondata[0][0].headPhoto}`
+            }
             if (!/^https:/.test(jsondata[0][0].dietPhoto)) {
                 jsondata[0][0].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${jsondata[0][0].dietPhoto}`
             }
