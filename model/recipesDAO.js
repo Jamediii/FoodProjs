@@ -19,7 +19,8 @@ class RECIPES {
     //查找菜谱：模糊查询
     findRecipe() {
         // return DAO('call findRecipe(?)',['%'+ p_recipeName + '%'])
-        return DAO('select detailsId,userId,accountName,recipeName from recipedetails left join userinfo on authorid = userId GROUP BY accountName;', [])
+        return DAO('select headPhoto,recipeCoverImg,detailsId,userId,accountName,recipeName from recipedetails left join userinfo on authorid = userId', [])
+        // return DAO('call searchThing();', [])
     }
 
     //根据用户Id查找作者对应的食谱
