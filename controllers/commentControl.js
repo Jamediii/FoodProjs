@@ -40,7 +40,7 @@ module.exports = {
                 detailsId: ctx.request.body.detailsId,
                 commentTime: ctx.request.body.commentTime
             };
-            console.log(comment);
+            // console.log(comment);
             await commentDAO.addComment(comment);
             ctx.body = {"code": 200, "message": "数据插入成功",data:true};
         } catch (e) {
