@@ -79,6 +79,17 @@ module.exports = {
         }
     },
 
+    // 删除自己的菜谱！
+    delUserRecipe: async (ctx, next) => {
+        const recipesId = ctx.params.recipesId;
+        try {
+            await userDAO.delUserRecipe(recipesId);
+            ctx.body = {"code": 200, "message": "ok", data: '删库成功!'};
+        } catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
+    },
+
     // 用户自己某一个菜谱详情-接口
     getRecipesId: async (ctx, next) => {
         const user = ctx.params;
@@ -100,6 +111,24 @@ module.exports = {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
         }
     },
+
+    // 获取用户未过审的菜谱详细信息
+    modifyUserMn: async (ctx, next) => {
+        const receipesId = ctx.params.receipesId;
+        try {
+            // 食谱
+            let modifyMu = await userDAO.modifyUserMn(receipesId);
+            modifyMu[0][0].dietPhoto =`http://127.0.0.1:3000/images/dietPhoto/${modifyMu[0][0].dietPhoto}`;
+            for(let i = 0; i < modifyMu[2].length; i++) {
+                modifyMu[2][i].stepPhoto = `http://127.0.0.1:3000/images/dietPhoto/${modifyMu[2][i].stepPhoto}`;
+            }
+            ctx.body = {"code": 200, "message": "ok", data: modifyMu};
+        } catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
+    },
+
+
 
     // 粉丝列表-接口
     getFansInfo: async (ctx, next) => {
