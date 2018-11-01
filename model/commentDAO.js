@@ -3,7 +3,7 @@ const DAO = require("../model/DAO");
 class DB {
     //根据菜谱id查询评论人数
     getCommPerson(id){
-        return DAO('select count(1) from comment where detailsId = ? ;',[id]);
+        return DAO('select count(1) as commentNum from comment where detailsId = ? ;',[id]);
     }
     //根据菜谱id查询评论内容
     getCommContent(id){

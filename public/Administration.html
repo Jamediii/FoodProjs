@@ -6,8 +6,11 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/nav.css">
     <link rel="stylesheet" type="text/css" href="font/iconfont.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/mian.css">
-    <script type="text/javascript" src="./javascripts/jquery.min.js"></script>
-    <script type="text/javascript" src="./javascripts/nav.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/nav.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 
@@ -42,37 +45,44 @@
     </ul>
 </div>
 <div id="mian">
-    <div class="center">
-        <li class="item1" style="background-color: pink;">1</li>
-        <li class="item2 myhidden" style="background-color: red;">2</li>
-        <li class="item3 myhidden">3</li>
-        <li class="item4 myhidden">4</li>
-        <li class="item5 myhidden">5</li>
-    </div>
+    <ul class="center">
+        <li class="item1"></li>
+        <li class="item2 myhidden"></li>
+        <li class="item3 myhidden"></li>
+        <li class="item4 myhidden"></li>
+        <li class="item5 myhidden"></li>
+    </ul>
 </div>
 <script>
+    $(".item1").load("./publishRecipe.html");
+    $(".item2").load("./examine.html");
+    $(".item3").load("./publishArticle.html");
+    $(".item4").load("./publicActivity.html");
+    $(".item5").load("./selectionRecipes.html");
+</script>
+<script>
     $("#recipeMag li:first-child").click(function () {
-        // console.log("haha");
-        $(".center li").hide();
-        $(".center .item1").show();
+        $(".center>li").addClass('myhidden');
+        $(".center>.item1").removeClass('myhidden');
     });
     $("#recipeMag li:last-child span").click(function () {
-        $(".center li").hide();
-        $(".center .item2").show();
+        $(".center li").addClass('myhidden');
+        $(".center .item2").removeClass('myhidden');
     });
     $("#articleMag li:first-child").click(function () {
-        $(".center li").hide();
-        $(".center .item3").show();
+        $(".center>li").addClass('myhidden');
+        $(".center>.item3").removeClass('myhidden');
     });
     $("#activityMag li:first-child").click(function () {
-        $(".center li").hide();
-        $(".center .item4").show();
+        $(".center>li").addClass('myhidden');
+        $(".center>.item4").removeClass('myhidden');
     });
     $("#activityMag li:last-child").click(function () {
-        $(".center li").hide();
-        $(".center .item5").show();
+        $(".center>li").addClass('myhidden');
+        $(".center>.item5").removeClass('myhidden');
     });
-   $(".center li").height($(window).height())
+   $(".center li").height($(window).height());
+
 </script>
 </body>
 </html>
