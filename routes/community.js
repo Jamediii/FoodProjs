@@ -15,11 +15,6 @@ router.get('/article/brief/:articleId',async (ctx,next)=>{
     await communityControllers.getOneArticleBrief(ctx,next)
 })
 
-// 添加文章
-// router.post('/article/add',async (ctx,next)=>{
-//     await communityControllers.addArticle(ctx,next);
-// })
-
 //根据文章编号删除文章
 router.get('/article/delete/:articleId',async (ctx,next)=>{
     await communityControllers.delOneArticle(ctx,next);
@@ -64,12 +59,5 @@ router.get('/author/delete/:authorId',async (ctx,next)=>{
 router.post('/author/find',async (ctx,next)=>{
     await communityControllers.findAuthor(ctx,next)
 })
-
-//更新作者信息
-//？？？
-//更改作者名
-// router.get('/author/update/:authorId/:authorName',async (ctx,next)=>{
-//     await communityControllers.updateOneAuthor(ctx,next);
-// })
 
 module.exports = router;

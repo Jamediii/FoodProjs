@@ -1,22 +1,6 @@
 const communityDAO = require('../model/communityDAO');
 
 module.exports = {
-    //文章
-    // addArticle:async (ctx,next)=>{
-    //     let article = {
-    //         "articleName": ctx.request.body.articleName,
-    //         "articleContent": ctx.request.body.articleContent,
-    //         "articlePicBig": ctx.request.body.articlePicBig,
-    //         "articlePicSmall": ctx.request.body.articlePicSmall,
-    //         "articleBrief":ctx.request.body.articleBrief
-    //     };
-    //     try {
-    //         await communityDAO.addArticle(article);
-    //         ctx.body = {"code":200,"message":"ok",data:[]}
-    //     }catch (err) {
-    //         ctx.body = {"code":500,"message":err.toString(),data:[]}
-    //     }
-    // },
     getAllArticle:async (ctx,next)=>{
         try {
             let jsondata = await communityDAO.getAllArticle();

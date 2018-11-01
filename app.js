@@ -7,7 +7,6 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 // 跨域插件
 const cors = require('koa2-cors');
-// const staticServer = require('koa-static');
 
 
 const index = require('./routes/index')
@@ -29,19 +28,19 @@ onerror(app)
 
 // middlewares
 app.use(bodyparser({
-    enableTypes: ['json', 'form', 'text']
+  enableTypes:['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
+app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
-    map: {html:'ejs'}
-    // extension: 'ejs'
+  map: {'html':'ejs'}
 }))
 // app.use(staticServer(__dirname, 'public'));
-app.use(require('koa-static')(__dirname+'/public'));
+// app.use(require('koa-static')(__dirname+'/public'));
 app.use(cors({
-    origin: function (ctx) {
+    origin: function(ctx) {
         if (ctx.url === '/test') {
             return false;
         }
@@ -58,10 +57,10 @@ app.use(cors({
 
 // logger
 app.use(async (ctx, next) => {
-    const start = new Date()
-    await next()
-    const ms = new Date() - start
-    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+  const start = new Date()
+  await next()
+  const ms = new Date() - start
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
 // routes
@@ -81,7 +80,7 @@ app.use(comment.routes(), comment.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
-    console.error('server error', err, ctx)
+  console.error('server error', err, ctx)
 });
 
 module.exports = app

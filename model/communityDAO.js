@@ -1,17 +1,6 @@
 const DAO = require('../model/DAO');
 
 class ARTICLE {
-    //文章！！！
-    //添加文章
-    //怎么上传图片到数据库？？？
-    //分类编号和作者编号怎么填？？？
-    //classify怎么确定？
-    // addArticle(article){
-    //     return DAO('insert into article (articleName,articleTime,articleContent,articlePicBig,articlePicSmall,articleBrief) values (?,?,?,?,?,?)',
-    //         [article.articleName,new Date(),article.articleContent,article.articlePicBig,article.articlePicSmall,article.articleBrief])
-    // }
-
-
     //显示所有文章的全部信息
     getAllArticle(){
         // return DAO('select * from article')
@@ -71,10 +60,5 @@ class ARTICLE {
         return DAO('call findAuthor(?)',['%'+ p_authorName + '%'])
     }
 
-    //根据authorId更新作者信息
-    // updateOneAuthor(author){
-    //     return DAO('update articleAuthor set authorName = ? where authorId = ?',
-    //         [author.authorName,author.authorId])
-    // }
 }
 module.exports = new ARTICLE();

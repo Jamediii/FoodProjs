@@ -15,7 +15,7 @@ class DB {
     //根据文章id,修改文章点赞数
     //1、添加点赞数
     addPraiseArtNum(articId){
-        return DAO('call articleAddPriNum(?)',[articId]);
+        return DAO('call articleAddPriNum(?)',[articId])
     }
     //2、取消点赞数
     cancelPraiseArtNum(articId){

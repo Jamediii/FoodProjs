@@ -63,7 +63,7 @@ router.get('/users/:userId',async (ctx,next)=>{
     await recipesControllers.getUserRecipetails(ctx,next);
 })
 
-// 获取基本图片
+// 获取用户上传的图片
 router.get('/basicPhoto', async (ctx, next) => {
     await recipesControllers.getBasicPhoto(ctx,next);
 })
