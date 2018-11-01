@@ -6,7 +6,7 @@ module.exports = {
         try {
         let dId = ctx.request.body.detailsId;
         await praiseNumDAO.addPraiseRecNum(dId);
-        ctx.body = {"code": 200, "message": "点赞成功"};
+        ctx.body = {"code": 200, "message": "点赞成功",data:true};
         } catch (e) {
             ctx.body = {"code": 500, "message": "点赞失败", e};
         }
@@ -17,7 +17,7 @@ module.exports = {
         try {
             let detailsId = ctx.request.body.detailsId;
             await praiseNumDAO.cancelPraiseRecNum(detailsId);
-            ctx.body = {"code": 200, "message": "取消点赞成功"};
+            ctx.body = {"code": 200, "message": "取消点赞成功",data:true};
         } catch (e) {
             ctx.body = {"code": 500, "message": "取消失败", e};
         }
@@ -28,7 +28,7 @@ module.exports = {
         try {
             let articId = ctx.request.body.articId;
             await praiseNumDAO.addPraiseArtNum(articId);
-            ctx.body = {"code": 200, "message": "点赞成功"};
+            ctx.body = {"code": 200, "message": "点赞成功",data:true};
         } catch (e) {
             ctx.body = {"code": 500, "message": "点赞失败", e};
         }
@@ -39,7 +39,7 @@ module.exports = {
         try {
             let articId = ctx.request.body.articId;
             await praiseNumDAO.cancelPraiseArtNum(articId);
-            ctx.body = {"code": 200, "message": "取消点赞成功"};
+            ctx.body = {"code": 200, "message": "取消点赞成功",data:true};
         } catch (e) {
             ctx.body = {"code": 500, "message": "取消点赞失败", e};
         }
