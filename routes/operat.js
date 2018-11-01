@@ -9,6 +9,10 @@ router.get('/:userId', async (ctx, next) => {
     await userInfo.getRecipes(ctx, next)
 })
 
+    // 删除自己的菜谱！
+    .get('/delUserRecipe/:recipesId', async (ctx, next) => {
+        await userInfo.delUserRecipe(ctx, next);
+    })
 
     // 未审核菜谱详情 + 过审失败菜谱详情---根据具体自己的菜谱编号
     .get('/noreviewed/:userId/:recipesId', async (ctx, next) => {
@@ -30,6 +34,12 @@ router.get('/:userId', async (ctx, next) => {
     .post('/upload', async (ctx, next) => {
         // 基本信息// 食材// 制作步骤
         await userInfo.uploadContent(ctx, next);
+    })
+
+    //  获取用户未过审的菜谱详细信息
+    .get('/modifymn/:receipesId',async (ctx, next) => {
+        // 基本信息// 食材// 制作步骤
+        await userInfo.modifyUserMn(ctx, next);
     });
 
 module.exports = router;

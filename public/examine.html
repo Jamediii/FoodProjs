@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        $(function () {
+            $.ajax({
+                url:'http://localhost:3000/admin',
+                type:'get',
+                success:function(result){
+                    console.log(result.data);
+                    if(result.data.length > 0){
+                        let stuInfos  = '';
+                        for(var i = 0 ; i < result.data.length; i++){
+                            stuInfos += `<li style="display: block">${result.data[i].dietTitle}</li>`
+                        }
+                        $('#ul').html(stuInfos);
+                        console.log(stuInfos);
+                    }
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+<div class="alert bg-primary" role="alert">菜谱管理&nbsp;&nbsp;>>&nbsp;审核用户菜谱</div>
+<div>
+    <ul id="ul" >
+
+    </ul>
+</div>
+
+</body>
+</html>

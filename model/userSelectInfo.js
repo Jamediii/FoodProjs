@@ -27,11 +27,21 @@ class userSelectInfo {
         return DAO('select dietId,dietTitle,dietPhoto,dietTime,dietIntroduce,releaseTime,productState from dietlist where userId = ?',[userId]);
     };
 
+    // 删除某个菜谱
+    delUserRecipe(recipesId) {
+        return DAO('call delUserRecipe(?)',[recipesId]);
+    }
+
     // 过审菜谱详情
     // 未过审菜谱详情 + 过审失败菜谱详情 -------问题-------
     getRecipesInfo(user) {
         return DAO('select * from dietlist d1 right join stepslist s1 on d1.dietId = ? left join foodlist f1 on f1.dietId = s1.dietId having d1.userId = ?',[user.recipesId,user.userId]);
     };
+
+    // 未过审菜谱详情
+    modifyUserMn(receipesId) {
+        return DAO('call getModifyRecipe(?);',[receipesId]);
+    }
 
     // 通过菜谱id 获取用户菜谱基本信息<菜谱名称+菜谱图片+菜谱简述+菜谱状态>
     getUserCollection(recipesId) {
@@ -40,7 +50,7 @@ class userSelectInfo {
 
     // 通过用户id 获取用户粉丝信息(用户id+用户名+用户头像)
     getUserFans(userId) {
-        return DAO('select userId,accountName,headPhoto from userinfo where userId in (select fansId from fans where userId = ?)',[userId]);
+        return DAO('select userId,accountName,headPhoto,sex from userinfo where userId in (select fansId from fans where userId = ?)',[userId]);
     };
 
     // 查询是否有关注

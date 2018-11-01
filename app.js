@@ -35,8 +35,8 @@ app.use(json())
 app.use(logger())
 
 app.use(views(__dirname + '/views', {
-    // map: {'html':'ejs'}
-    extension: 'ejs'
+    map: {html:'ejs'}
+    // extension: 'ejs'
 }))
 // app.use(staticServer(__dirname, 'public'));
 app.use(require('koa-static')(__dirname+'/public'));
