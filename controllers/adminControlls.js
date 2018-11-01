@@ -4,9 +4,7 @@ module.exports = {
         try {
             //获取用户作品表全部信息
             let userPro = await adminDAO.getUserproc();
-            // ctx.body = {"code": 200, "message": "ok", data: userPro};
-            console.log(userPro);
-           await ctx.render("auditRecipes",{title:"hahah",data:userPro});
+            ctx.body = {"code": 200, "message": "ok", data: userPro};
         } catch (e) {
             ctx.body = {"code": 500, "message": "服务器错误", e};
         }
