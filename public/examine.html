@@ -3,32 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/mainExamine.css">
     <script>
+        let detailId = 0;
         $(function () {
             $.ajax({
-                url:'http://localhost:3000/admin',
-                type:'get',
-                success:function(result){
+                url: 'http://localhost:3000/admin',
+                type: 'get',
+                success: function (result) {
                     console.log(result.data);
-                    if(result.data.length > 0){
-                        let stuInfos  = '';
-                        for(var i = 0 ; i < result.data.length; i++){
-                            stuInfos += `<li style="display: block">${result.data[i].dietTitle}</li>`
+                    if (result.data.length > 0) {
+                        let stuInfos = '';
+                        for (var i = 0; i < result.data.length; i++) {
+                            stuInfos += `<tr>
+                                <td>${result.data[i].dietId}</td>
+                                <td>${result.data[i].dietTitle}</td>
+                                <td><img width="100px" src="./images/dietPhoto/${result.data[i].dietPhoto}"></td>
+                                <td>${result.data[i].dietIntroduce}</td>
+                                <td>${result.data[i].userId}</td>
+                                <td>${result.data[i].productState}
+                                <td><button>查看详情</button></td>
+                                </tr>`
                         }
-                        $('#ul').html(stuInfos);
-                        console.log(stuInfos);
+                        $('#eTable>tbody').html(stuInfos);
                     }
+                    $("#eTable tr button").click(function (e) {
+                        e.stopPropagation();
+                        detailId = result.data[$(this).parent().parent('tr').index()].dietId;
+                        $('#eShowRecipeState').addClass("myhidden");
+                        $('#ShowRecipeDetail').removeClass("myhidden");
+                    })
                 }
             })
+
         });
     </script>
 </head>
 <body>
 <div class="alert bg-primary" role="alert">菜谱管理&nbsp;&nbsp;>>&nbsp;审核用户菜谱</div>
-<div>
-    <ul id="ul" >
-
-    </ul>
+<!--显示未审核菜谱部分-->
+<div id="eShowRecipeState">
+    <table id="eTable" border="1">
+        <thead style="background-color: #337ab7;color:#fff;">
+        <td>菜谱ID</td>
+        <td>菜谱名称</td>
+        <td>菜谱图片</td>
+        <td>菜谱简介</td>
+        <td>制作者ID</td>
+        <td>审核状态</td>
+        <td>查看详情</td>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<!--未审核菜谱详情部分-->
+<div id="ShowRecipeDetail" class="myhidden">
+    <table id="srdTable">
+        <tr>
+            <td></td>
+        </tr>
+    </table>
 </div>
 
 </body>

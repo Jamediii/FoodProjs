@@ -61,6 +61,7 @@
     $(".item5").load("./selectionRecipes.html");
 </script>
 <script>
+    $("#mian .center").css('height',$(window).height()-20);
     $("#recipeMag li:first-child").click(function () {
         $(".center>li").addClass('myhidden');
         $(".center>.item1").removeClass('myhidden');

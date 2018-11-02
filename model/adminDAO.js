@@ -4,7 +4,7 @@ const DAO = require("../model/DAO");
 class DB {
     //获取全部用户的数据
     getUserproc() {
-        return DAO("select * from dietlist", []);
+        return DAO("select * from dietlist where productState ='未审核'", []);
     }
 
     //修改用户作品的审核状态
