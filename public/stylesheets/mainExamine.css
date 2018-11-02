@@ -1,0 +1,14 @@
+/*审核菜谱部分开始*/
+#eShowRecipeState {
+    margin-left: 380px;
+}
+#eShowRecipeState #eTable tbody tr{
+    height: 200px;
+}
+
+#eShowRecipeState #eTable tbody td{
+    width: 200px;
+    height: 200px;
+}
+
+/*审核菜谱部分结束*/

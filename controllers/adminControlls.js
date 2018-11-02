@@ -21,6 +21,18 @@ module.exports = {
             ctx.body={"code":500,"message":"服务器错误",e};
         }
     },
+
+    //去审核菜谱详情路哟
+    // goERecipeDetail: async (ctx, next) => {
+    //     try{
+    //         let query = ctx.params.dietId;
+    //         ctx.body={"code":200,"message":"ok",data:query};
+    //         // ctx.render("recipeDetail.html",{data:query});
+    //     }catch (e) {
+    //         ctx.body={"code":500,"message":"服务器错误",e};
+    //     }
+    // },
+
     //判断管理员验证登录
     checkAdmin:async (ctx,next)=>{
         try {
