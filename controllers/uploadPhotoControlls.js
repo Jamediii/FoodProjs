@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const userDAO = require('../model/userSelectInfo');
 const storageDAO = require('../model/storageDAO');
+const adminStorageDAO = require('../model/adminStorageDAO');
 
 
 class uploadPhoto {
@@ -146,6 +147,85 @@ class uploadPhoto {
                 stepAll: stepArray
             };
             storageDAO(dietlist, foodlist, steplist);
+        });
+    }
+
+    // 管理员上传菜谱
+    adminUpContent(ctx) {
+        let formidb = new formidable.IncomingForm();
+        formidb.uploadDir = '../public/images/adminUploadPhoto'; // 设置文件下载路径
+
+        // 获取当前时间
+        let dt = new Date();
+        // 获取时间戳
+        let userDate = dt.toLocaleString().replace(/[^0-9]/g, '');
+
+
+        formidb.parse(ctx.req, async (err, fields, files) => {
+            if (err) {
+                console.log("上传失败" + err.message);
+                return false;
+            }
+            // -----------------------------上传 作品基本信息-----------------------------------
+            // 获取用户id
+            let userId = fields.userId;
+            let recipeClassifyId = fields.recipeClassifyId;
+            // 地址
+            let src = files.dieltFile0.path;
+            let fileName = files.dieltFile0.name;
+            // 获取源文件全路径
+            let srcNew = path.join(__dirname, src);
+            let destName = `adminUpload_${userDate}_${fileName}`;
+            // 改名
+            let name = path.join(path.parse(srcNew).dir, destName);
+            fs.renameSync(srcNew, name);
+            let dietlist = {
+                id: userId,
+                recipeClassifyId, // 分类
+                dietMessage: {
+                    recipeName: fields.recipeName,// 标题
+                    recipeBrief: fields.recipeBrief, //简介
+                    recipeMakeTime: fields.recipeMakeTime,// 制作时间
+                    recipeWeight: fields.recipeWeight,// 制作分量<人份>
+                },
+                recipeCoverImg: destName,
+            };
+
+            // 上传 食材基本信息 ---------------------------------------------
+            let recipefood = JSON.parse(fields.recipefood); // []
+
+            //------------------------------------- 上传 步骤信息  -----------------------------------------
+            let recipestep = JSON.parse(fields.recipestep);
+
+            let stepArray = [];
+            for (let i = 0; i < recipestep.length; i++) {
+                let photoName = recipestep[i].stepPhoto;
+                for (let j in files) {
+                    if (files[j].name == photoName) {
+                        let photoDetail = recipestep[i].stepDetail;
+                        let src = files[j].path;
+                        let fileName = files[j].name;
+                        // 获取源文件全路径
+                        let srcNew = path.join(__dirname, src);
+                        // 设置图片名称
+                        let destName = `adminUpload_${userDate}_${fileName}`;
+                        // 改名
+                        let name = path.join(path.parse(srcNew).dir, destName);
+                        fs.renameSync(srcNew, name);
+
+                        let stepString = {
+                            steps: j.toString().replace(/[^0-9]/g, ""),
+                            stepsName: destName,
+                            stepDetail: photoDetail
+                        };
+                        stepArray.push(stepString);
+                    }
+                }
+            }
+            let steplist = {
+                stepAll: stepArray
+            };
+            adminStorageDAO(dietlist, recipefood, steplist);
         });
     }
 }

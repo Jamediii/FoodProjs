@@ -112,6 +112,17 @@ module.exports = {
         }
     },
 
+    // 管理员上传
+    adminUploadContent: async (ctx, next) => {
+        try {
+            // 食谱
+            await upPhoto.adminUpContent(ctx);
+            ctx.body = {"code": 200, "message": "ok", data: '菜谱上传成功'};
+        } catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
+    },
+
     // 获取用户未过审的菜谱详细信息
     modifyUserMn: async (ctx, next) => {
         const receipesId = ctx.params.receipesId;
