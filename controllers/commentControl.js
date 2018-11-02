@@ -4,7 +4,7 @@ module.exports = {
     //获取评论的人数
     getCommCount: async (ctx, next) => {
         try {
-            let query = ctx.request.body.menu_Id;
+            let query = ctx.request.body.id;
             let count = await commentDAO.getCommPerson(query);
             ctx.body = {"code": 200, "message": "ok", data: count};
         } catch (e) {

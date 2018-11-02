@@ -3,7 +3,8 @@ const DAO = require('../model/DAO');
 class RECIPES {
     //显示所有菜谱的全部信息
     getAllRecipe() {
-        return DAO('select detailsId, recipeName,recipeBrief,recipePraiseNum,recipeCoverImg,userinfo.accountName,headPhoto from recipedetails,userinfo where recipedetails.authorid = userinfo.userId')
+        // return DAO('select detailsId, recipeName,recipeBrief,recipePraiseNum,recipeCoverImg,userinfo.accountName,headPhoto from recipedetails,userinfo where recipedetails.authorid = userinfo.userId')
+        return DAO('select recipedetails.detailsId, recipeName,recipeBrief,recipePraiseNum,recipeCoverImg,userinfo.accountName,headPhoto,count(1) as commentSum from recipedetails left join userinfo on recipedetails.authorid = userinfo.userId left join comment on recipedetails.detailsId = comment.detailsId group by recipedetails.detailsId;')
     }
 
     //获取菜谱详情
