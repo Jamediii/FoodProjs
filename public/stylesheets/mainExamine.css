@@ -1,7 +1,14 @@
 /*审核菜谱部分开始*/
 #eShowRecipeState {
-    margin-left: 380px;
+    margin:0 100px;
+    text-align: center;
 }
+
+#eShowRecipeState #eTable thead td{
+    width: 200px;
+    font-size: 20px;
+}
+
 #eShowRecipeState #eTable tbody tr{
     height: 200px;
 }
@@ -9,6 +16,26 @@
 #eShowRecipeState #eTable tbody td{
     width: 200px;
     height: 200px;
+    text-align: center;
 }
 
 /*审核菜谱部分结束*/
+
+/*未审核菜谱详情部分开始*/
+#ShowRecipeDetail{
+    margin:0 100px;
+}
+#ShowRecipeDetail #srdTable{
+    text-align: center;
+}
+
+#ShowRecipeDetail #srdTable tr{
+    height: 40px;
+}
+
+#ShowRecipeDetail #srdTable tr td,#eShowRecipeState #eTable tbody td{
+    width: 130px;
+    font-size: 20px;
+}
+
+/*未审核菜谱详情部分结束*/

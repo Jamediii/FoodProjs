@@ -46,11 +46,11 @@
 </div>
 <div id="mian">
     <ul class="center">
-        <li class="item1"></li>
-        <li class="item2 myhidden"></li>
-        <li class="item3 myhidden"></li>
-        <li class="item4 myhidden"></li>
-        <li class="item5 myhidden"></li>
+        <li class="item1" style="margin-left: 220px;"></li>
+        <li class="item2  myhidden" style="margin-left: 220px;"></li>
+        <li class="item3 myhidden" style="margin-left: 220px;"></li>
+        <li class="item4 myhidden" style="margin-left: 220px;"></li>
+        <li class="item5 myhidden" style="margin-left: 220px;"></li>
     </ul>
 </div>
 <script>
@@ -61,10 +61,11 @@
     $(".item5").load("./selectionRecipes.html");
 </script>
 <script>
-    $("#mian .center").css('height',$(window).height()-20);
+    // $("#mian .center").css('height',$(window).height()-20);
     $("#recipeMag li:first-child").click(function () {
         $(".center>li").addClass('myhidden');
         $(".center>.item1").removeClass('myhidden');
+
     });
     $("#recipeMag li:last-child span").click(function () {
         $(".center li").addClass('myhidden');
@@ -82,7 +83,8 @@
         $(".center>li").addClass('myhidden');
         $(".center>.item5").removeClass('myhidden');
     });
-   $(".center li").height($(window).height());
+   // $(".center li").height($(window).height());
+
 
 </script>
 </body>
