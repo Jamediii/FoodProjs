@@ -2,7 +2,7 @@
 /* 以下实际使用若已初始化可删除 .nav height父级需逐级设置为100%*/
 body, html {
     height: 100%;
-    background: #E2E2E2
+    /*background: #E2E2E2*/
 }
 
 body, ul {
@@ -32,6 +32,7 @@ a {
     background: #263238;
     transition: all .3s;
     float:left;
+    position: fixed;
 }
 
 .nav a {
