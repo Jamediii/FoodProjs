@@ -12,6 +12,13 @@ class DB {
         return DAO("update dietlist set dietlist.productState=? where dietlist.dietId=?;", [stateMessage,id]);
     }
 
+    //上传文章
+    upArticle(articleDetail) {
+        return DAO("insert into article(articleName,articleTime,articleContent,articleCoverImg,articlePic,authorId,articleBrief,classifyId) values (?,?,?,?,?,?,?,?);",
+            [articleDetail.aTitle,articleDetail.aPublishTime,articleDetail.aContent,articleDetail.aListPic,
+                articleDetail.aContentPic,articleDetail.aAuthorNum,articleDetail.aBrief,articleDetail.aArticleType]);
+    }
+
     //获取管理员信息
     getAdminInfo(){
         return DAO('SELECT * FROM myadmin',[]);

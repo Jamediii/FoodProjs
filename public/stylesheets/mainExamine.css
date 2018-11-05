@@ -1,5 +1,5 @@
 /*审核菜谱部分开始*/
-#eShowRecipeState {
+#eShowRecipeState ,#publishArticle{
     margin:0 100px;
     text-align: center;
 }
@@ -23,19 +23,36 @@
 
 /*未审核菜谱详情部分开始*/
 #ShowRecipeDetail{
-    margin:0 100px;
+    margin:0 200px;
 }
 #ShowRecipeDetail #srdTable{
     text-align: center;
 }
 
-#ShowRecipeDetail #srdTable tr{
+#ShowRecipeDetail #srdTable tr,#publishArticle #paTable tr{
     height: 40px;
 }
 
-#ShowRecipeDetail #srdTable tr td,#eShowRecipeState #eTable tbody td{
-    width: 130px;
+#ShowRecipeDetail #srdTable tr td,
+#eShowRecipeState #eTable tbody td,
+#publishArticle #paTable tr td{
+    width: 160px;
     font-size: 20px;
 }
 
 /*未审核菜谱详情部分结束*/
+
+/*发表文章部分开始*/
+#publishArticle #paTable tr td{
+    text-align: left;
+}
+#publishArticle #paTable tr td:last-child{
+    width: 800px;
+}
+#publishArticle #paTable .aType td select{
+    height: 38px;
+}
+#publishArticle #paTable tr:last-child td{
+    text-align: center;
+}
+/*发表文章部分结束*/

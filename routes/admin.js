@@ -22,6 +22,12 @@ router.get('/changeState/:mesg/:dietId', async (ctx, next) => {
 });
 
 
+//上传文章路由
+router.post('/upArticle', async (ctx, next) => {
+    //显示作品的全部信息，用于渲染管理员登录之后的页面
+    await adminCortrolls.upArticleDetail(ctx,next);
+});
+
 //跳到需要管理员菜谱审核详情的路由
 // router.get('/showERdetail/:dietId', async (ctx, next) => {
 //     //显示作品的全部信息，用于渲染管理员登录之后的页面

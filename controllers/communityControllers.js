@@ -17,111 +17,128 @@ module.exports = {
     //         ctx.body = {"code":500,"message":err.toString(),data:[]}
     //     }
     // },
-    getAllArticle:async (ctx,next)=>{
+    getAllArticle: async (ctx, next) => {
         try {
             let jsondata = await communityDAO.getAllArticle();
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            for (let i = 0; i < jsondata.length; i++) {
+                if (!/^http/.test(jsondata[i].articleCoverImg)){
+                    jsondata[i].articleCoverImg= `http://127.0.0.1:3000/images/articlePhoto/${jsondata[i].articleCoverImg}`
+                }
+                if (!/^http/.test(jsondata[i].articlePic)) {
+                    jsondata[i].articlePic= `http://127.0.0.1:3000/images/articlePhoto/${jsondata[i].articlePic}`
+                }
+            }
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+            // console.log(jsondata);
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
 
-    getOneArticle:async (ctx,next)=>{
+    getOneArticle: async (ctx, next) => {
         try {
             let jsondata = await communityDAO.getOneArticle(ctx.params.articleId);
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            for (let i = 0; i < jsondata.length; i++) {
+                if (!/^http/.test(jsondata[i].articleCoverImg)){
+                    jsondata[i].articleCoverImg= `http://127.0.0.1:3000/images/articlePhoto/${jsondata[i].articleCoverImg}`
+                }
+                if (!/^http/.test(jsondata[i].articlePic)) {
+                    jsondata[i].articlePic= `http://127.0.0.1:3000/images/articlePhoto/${jsondata[i].articlePic}`
+                }
+            }
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    getOneArticleBrief:async (ctx,next)=>{
+    getOneArticleBrief: async (ctx, next) => {
         try {
             let jsondata = await communityDAO.getOneArticleBrief(ctx.params.articleId);
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    delOneArticle:async (ctx,next)=>{
+    delOneArticle: async (ctx, next) => {
         try {
             await communityDAO.delOneArticle(ctx.params.articleId);
-            ctx.body = {"code":200,"message":"删除成功",data:[]}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "删除成功", data: []}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    findArticle:async (ctx,next)=>{
+    findArticle: async (ctx, next) => {
         try {
             let p_articleName = ctx.request.body.p_articleName;
             let jsondata = await communityDAO.findArticle(p_articleName);
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    classifyArticle:async (ctx,next)=>{
-        try{
+    classifyArticle: async (ctx, next) => {
+        try {
             let classifyId = ctx.params.classifyId;
             let jsondata = await communityDAO.classifyArticle(classifyId);
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    orderArticle:async (ctx,next)=>{
-        try{
+    orderArticle: async (ctx, next) => {
+        try {
             let jsondata = await communityDAO.orderArticle();
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
 
     //作者
-    getAllAuthor:async (ctx,next)=>{
-        try{
+    getAllAuthor: async (ctx, next) => {
+        try {
             let jsondata = await communityDAO.getAllAuthor();
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    addAuthor:async (ctx,next)=>{
+    addAuthor: async (ctx, next) => {
         try {
             let author = {
                 "authorName": ctx.request.body.authorName,
                 "authorBrief": ctx.request.body.authorBrief,
-                "authorImg":ctx.request.body.authorImg
+                "authorImg": ctx.request.body.authorImg
             };
             await communityDAO.addAuthor(author);
-            ctx.body = {"code":200,"message":"ok",data:[]}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: []}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    getOneAuthor:async (ctx,next)=>{
+    getOneAuthor: async (ctx, next) => {
         try {
             let jsondata = await communityDAO.getOneAuthor(ctx.params.authorId);
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    delOneAuthor:async (ctx,next)=>{
+    delOneAuthor: async (ctx, next) => {
         try {
             await communityDAO.delOneAuthor(ctx.params.authorId);
-            ctx.body = {"code":200,"message":"删除成功",data:[]}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "删除成功", data: []}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
-    findAuthor:async (ctx,next)=>{
+    findAuthor: async (ctx, next) => {
         try {
             let p_authorName = ctx.request.body.p_authorName;
             let jsondata = await communityDAO.findAuthor(p_authorName);
-            ctx.body = {"code":200,"message":"ok",data:jsondata}
-        }catch (err) {
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     }
     // updateOneAuthor:async (ctx,next)=>{
