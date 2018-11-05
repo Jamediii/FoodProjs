@@ -48,7 +48,6 @@ module.exports = {
             let destListName = `articlePhoto_${userDate}_${aListFileName}`;
             let destContentName = `articlePhoto_${userDate}_${aContentPicName}`;
 
-            console.log(newaListPicSrc);
             //改名
             let newListname = path.join(path.parse(newaListPicSrc).dir, destListName);
             let newContentname = path.join(path.parse(newaContentPicSrc).dir, destContentName);
@@ -66,6 +65,7 @@ module.exports = {
             };
             await adminDAO.upArticle(articleDetail);
         });
+            ctx.body = {"code": 200, "message": "ok", data: true};
         } catch (e) {
             ctx.body = {"code": 500, "message": "服务器错误", e};
         }

@@ -25,7 +25,7 @@
                 formData.append('aArticleType', aArticleType);
                 $.ajax({
                     url: 'http://localhost:3000/admin/upArticle',
-                    type: "POST",
+                    type: "post",
 
                     cache: false,
                     processData: false,
@@ -39,7 +39,7 @@
                     error: function (err) {
                         console.log('失败' + err.message);
                     }
-                })
+                });
             });
         });
     </script>

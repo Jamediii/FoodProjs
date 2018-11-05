@@ -37,7 +37,7 @@
 #eShowRecipeState #eTable tbody td,
 #publishArticle #paTable tr td{
     width: 160px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /*未审核菜谱详情部分结束*/
@@ -46,8 +46,13 @@
 #publishArticle #paTable tr td{
     text-align: left;
 }
+
+#publishArticle #paTable tr td:first-child{
+    width: 180px;
+}
+
 #publishArticle #paTable tr td:last-child{
-    width: 800px;
+    /*width:700px;*/
 }
 #publishArticle #paTable .aType td select{
     height: 38px;
