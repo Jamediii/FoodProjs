@@ -50,6 +50,11 @@ router.get('/delete/:detailsId',async (ctx,next)=>{
 router.get('/users/all', async (ctx, next) => {
     await recipesControllers.getUseAllRecipe(ctx,next);
 });
+//获取上传了菜谱，且有菜谱通过审核的用户信息
+router.get('/users/info',async(ctx,next)=>{
+    await recipesControllers.getUserAllInfo(ctx,next);
+})
+
 //根据id获取用户菜谱全部详情（审核通过）
 router.get('/users/details/:dietId', async (ctx, next) => {
     await recipesControllers.getUserRecipe(ctx,next);

@@ -106,7 +106,7 @@ module.exports = {
     },
 
 
-    //获取用户上传且通过审核的全部菜谱的简介信息
+    //获取用户上传,且通过审核的全部菜谱的简介信息
     getUseAllRecipe: async (ctx, next) => {
         try {
             let jsondata = await recipesDAO.getUseAllRecipe();
@@ -120,6 +120,21 @@ module.exports = {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
+    //获取上传了菜谱，且有菜谱通过审核的用户信息
+    getUserAllInfo: async (ctx, next) => {
+        try {
+            let jsondata = await recipesDAO.getUserAllInfo();
+            // for(let i = 0; i < jsondata.length; i++ ) {
+            //     if (!/^http/.test(jsondata[i].dietPhoto)) {
+            //         jsondata[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${jsondata[i].dietPhoto}`;
+            //     }
+            // }
+            ctx.body = {"code": 200, "message": "ok", data: jsondata}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+
     //根据id获取用户菜谱全部详情（审核通过）
     getUserRecipe: async (ctx, next) => {
         try {
