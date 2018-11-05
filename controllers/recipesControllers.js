@@ -127,6 +127,9 @@ module.exports = {
                 if (!/^http/.test(jsondata[i].dietPhoto)) {
                     jsondata[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${jsondata[i].dietPhoto}`;
                 }
+                if (!/^http/.test(jsondata[i].headPhoto)) {
+                    jsondata[i].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${jsondata[i].headPhoto}`;
+                }
             }
             ctx.body = {"code": 200, "message": "ok", data: jsondata}
         } catch (err) {
