@@ -17,6 +17,14 @@ module.exports = {
         try {
             let detailsId = ctx.params.detailsId;
             let jsondata = await recipesDAO.getOneRecipe(detailsId);
+            if (!/^http/.test(jsondata[0][0].recipeCoverImg)) {
+                jsondata[0][0].recipeCoverImg = `http://127.0.0.1:3000/images/adminUploadPhoto/${jsondata[0][0].recipeCoverImg}`
+            }
+            for (let i = 0; i < jsondata[2].length; i++) {
+                if (!/^http/.test( jsondata[2][i].recipeStepImg)) {
+                    jsondata[2][i].recipeStepImg = `http://127.0.0.1:3000/images/adminUploadPhoto/${ jsondata[2][i].recipeStepImg}`
+                }
+            }
             ctx.body = {"code": 200, "message": "ok", data: jsondata}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
@@ -32,7 +40,7 @@ module.exports = {
                 for (var i = 0; i < length; i++) {
                     let jsondata = await recipesDAO.getRecipeBrief(detailsIdArray[i]);
                     if (!/^http/.test(jsondata[0].recipeCoverImg)) {
-                        jsondata[0].dietPhoto = `http://127.0.0.1:3000/dietPhoto/${jsondata[0].recipeCoverImg}`
+                        jsondata[0].recipeCoverImg = `http://127.0.0.1:3000/images/adminUploadPhoto/${jsondata[0].recipeCoverImg}`
                     }
                     await detailObj.push(jsondata);
                 }
@@ -78,6 +86,11 @@ module.exports = {
         try {
             let recipeClassifyId = ctx.params.recipeClassifyId;
             let jsondata = await recipesDAO.getClassifyRecipe(recipeClassifyId);
+            for (let i = 0; i < jsondata.length; i++) {
+                if (!/^http/.test(jsondata[i].recipeCoverImg)) {
+                    jsondata[i].recipeCoverImg = `http://127.0.0.1:3000/images/adminUploadPhoto/${ jsondata[i].recipeCoverImg}`
+                }
+            }
             ctx.body = {"code": 200, "message": "ok", data: jsondata}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
@@ -113,6 +126,9 @@ module.exports = {
             for(let i = 0; i < jsondata.length; i++ ) {
                 if (!/^http/.test(jsondata[i].dietPhoto)) {
                     jsondata[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${jsondata[i].dietPhoto}`;
+                }
+                if (!/^http/.test(jsondata[i].headPhoto)) {
+                    jsondata[i].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${jsondata[i].headPhoto}`;
                 }
             }
             ctx.body = {"code": 200, "message": "ok", data: jsondata}

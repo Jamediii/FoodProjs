@@ -112,6 +112,17 @@ module.exports = {
         }
     },
 
+    // 管理员上传
+    adminUploadContent: async (ctx, next) => {
+        try {
+            // 食谱
+            await upPhoto.adminUpContent(ctx);
+            ctx.body = {"code": 200, "message": "ok", data: '菜谱上传成功'};
+        } catch (err) {
+            ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
+        }
+    },
+
     // 获取用户未过审的菜谱详细信息
     modifyUserMn: async (ctx, next) => {
         const receipesId = ctx.params.receipesId;
@@ -135,6 +146,11 @@ module.exports = {
         const userId = ctx.params.userId;
         try {
             const fans = await userDAO.getUserFans(userId);
+            for (let i = 0; i < fans.length; i++) {
+                if (!/^http/.test(fans[i].headPhoto)) {
+                    fans[i].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${fans[i].headPhoto}`
+                }
+            }
             ctx.body = {"code": 200, "message": "ok", data: fans};
         } catch (err) {
             ctx.body = {"code": 500, "message": "服务器出错误", data: err.message};
@@ -205,7 +221,7 @@ module.exports = {
                 for (var i = 0; i < length; i++) {
                     let detail = await userDAO.getUserCollection(dtIdsArray[i]);
                     if (!/^http/.test(detail[0].dietPhoto)) {
-                        detail[0].dietPhoto = `http://127.0.0.1:3000/dietPhoto/${detail[0].dietPhoto}`
+                        detail[0].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${detail[0].dietPhoto}`
                     }
                     await detailObj.push(detail);
                 }

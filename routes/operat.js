@@ -36,6 +36,12 @@ router.get('/:userId', async (ctx, next) => {
         await userInfo.uploadContent(ctx, next);
     })
 
+    .post('/adminUpload', async (ctx, next) => {
+        // 基本信息+ 类别// 食材// 制作步骤
+        await userInfo.adminUploadContent(ctx, next);
+    })
+
+
     //  获取用户未过审的菜谱详细信息
     .get('/modifymn/:receipesId',async (ctx, next) => {
         // 基本信息// 食材// 制作步骤

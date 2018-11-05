@@ -3,32 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/mainExamine.css">
     <script>
+        let detailId = 0;
         $(function () {
             $.ajax({
-                url:'http://localhost:3000/admin',
-                type:'get',
-                success:function(result){
-                    console.log(result.data);
-                    if(result.data.length > 0){
-                        let stuInfos  = '';
-                        for(var i = 0 ; i < result.data.length; i++){
-                            stuInfos += `<li style="display: block">${result.data[i].dietTitle}</li>`
+                url: 'http://localhost:3000/admin',
+                type: 'get',
+                success: function (result) {
+                    if (result.data.length > 0) {
+                        let stuInfos = '';
+                        for (var i = 0; i < result.data.length; i++) {
+                            stuInfos += `<tr>
+                                <td>${result.data[i].dietId}</td>
+                                <td>${result.data[i].dietTitle}</td>
+                                <td><img width="100px" src="./images/dietPhoto/${result.data[i].dietPhoto}"></td>
+                                <td>${result.data[i].dietIntroduce}</td>
+                                <td>${result.data[i].userId}</td>
+                                <td>${result.data[i].productState}
+                                <td><button>查看详情</button></td>
+                                </tr>`
                         }
-                        $('#ul').html(stuInfos);
-                        console.log(stuInfos);
+                        $('#eTable>tbody').html(stuInfos);
                     }
+                    $("#eTable tr button").click(function (e) {
+                        e.stopPropagation();
+                        detailId = result.data[$(this).parent().parent('tr').index()].dietId;
+                        //获取菜谱详情
+                        $.get('http://localhost:3000/operat/modifymn/' + detailId, function (data) {
+                            let detailRW = data.data;
+                            $("#srdTable tr:first-child td:nth-child(2)").text(`${detailRW[0][0].dietId}`);
+                            $("#srdTable tr:nth-child(2) td:nth-child(2)").text(`${detailRW[0][0].dietTitle}`);
+                            $("#srdTable tr:nth-child(3) td:nth-child(2)").text(`${detailRW[0][0].dietTime}`);
+                            $("#srdTable tr:nth-child(4) td:nth-child(2)").text(`${detailRW[0][0].dietIntroduce}`);
+                            $("#srdTable tr:nth-child(5) td:nth-child(2) img").attr('src', `${detailRW[0][0].dietPhoto}`);
+                            let foodlist = '';
+                            for (let i = 0; i < detailRW[1].length; i++) {
+                                foodlist+=`<tr style="margin: 0 auto"><td>${detailRW[1][i].foodName}</td><td>${detailRW[1][i].foodNum}</td></tr>`;
+                            }
+                            $("#srdTable tr:nth-child(6) td:nth-child(2)").html(foodlist);
+                            let foodstep = '';
+                            for (let i = 0; i < detailRW[2].length; i++) {
+                                foodstep+=`<tr style="margin: 0 auto"><td><img height="100px" src="${detailRW[2][i].stepPhoto}" alt=""></td><td>${detailRW[2][i].stepDetail}</td></tr>`;
+                            }
+                            $("#srdTable tr:nth-child(7) td:nth-child(2)").html(foodstep);
+                            $("#srdTable tr:nth-child(8) td:nth-child(2)").text(`${detailRW[0][0].productState}`);
+                            console.log(detailRW[0]);
+                        });
+                        $('#eShowRecipeState').addClass("myhidden");
+                        $('#ShowRecipeDetail').removeClass("myhidden");
+
+                        //修改作品状态---审核通过
+                        $("#srdTable .passThrough").click(function () {
+                            $.ajax({
+                                url:`http://localhost:3000/admin/changeState/${$(this).text()}/${detailId}`,
+                                type:'get',
+                                success:function (data) {
+                                    if(data.data===1){
+                                        $("#srdTable tr:nth-child(8) td:nth-child(2)").text("已审核");
+                                    }
+                                }
+
+                            })
+                        });
+
+                    })
                 }
             })
+
+            //返回审核列表页面
+            $("#srdTable .gobackEShow").click(function () {
+                $('#eShowRecipeState').removeClass("myhidden");
+                $('#ShowRecipeDetail').addClass("myhidden");
+                window.location.reload();
+            });
+
         });
     </script>
 </head>
 <body>
-<div class="alert bg-primary" role="alert">菜谱管理&nbsp;&nbsp;>>&nbsp;审核用户菜谱</div>
-<div>
-    <ul id="ul" >
-
-    </ul>
+<div class="alert bg-primary" style="font-size: 20px"  role="alert">菜谱管理&nbsp;&nbsp;>>&nbsp;审核用户菜谱</div>
+<!--显示未审核菜谱部分-->
+<div id="eShowRecipeState">
+    <table id="eTable" border="1">
+        <thead style="background-color: #337ab7;color:#fff;">
+        <td>菜谱ID</td>
+        <td>菜谱名称</td>
+        <td>菜谱图片</td>
+        <td>菜谱简介</td>
+        <td>制作者ID</td>
+        <td>审核状态</td>
+        <td>查看详情</td>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<!--未审核菜谱详情部分-->
+<div id="ShowRecipeDetail" class="myhidden">
+    <table id="srdTable" border="1">
+        <tr>
+            <td>菜谱ID：</td>
+            <td colspan="3" style="width: 800px"></td>
+        </tr>
+        <tr>
+            <td>标题：</td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td>制作时间：</td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td>简介：</td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td>食谱图片：</td>
+            <td colspan="3"><img width="100px" src="" alt=""></td>
+        </tr>
+        <tr>
+            <td>食材：</td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td>步骤描述：</td>
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td>食谱状态：</td>
+            <td style="color: darkred"></td>
+            <td>
+                <button class="passThrough">已审核</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="gobackEShow"><button>返回未审核食谱列表</button></td>
+        </tr>
+    </table>
 </div>
 
 </body>

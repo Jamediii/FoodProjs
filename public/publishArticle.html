@@ -3,8 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>发表文章</title>
+    <script>
+        $(function () {
+            $("#paTable tr:last-child input[type=button]").click(function () {
+                let aTitle = $("#paTable tr:first-child td input").val();
+                let aBrief = $("#paTable tr:nth-child(2) td textarea").val();
+                let aContent = $("#paTable tr:nth-child(3) td textarea").val();
+                let aListPic = $("#paTable tr:nth-child(4) td input[type=file]")[0].files[0];
+                let aContentPic = $("#paTable tr:nth-child(5) td input[type=file]")[0].files[0];
+                let aPublishTime = $("#paTable tr:nth-child(6) td input[type=date]").val();
+                let aAuthorNum = $("#paTable tr:nth-child(7) td input[type=text]").val();
+                let aArticleType = $("#paTable .aType select").val();
+                let formData = new FormData();
+                formData.append('aTitle', aTitle);
+                formData.append('aBrief', aBrief);
+                formData.append('aContent', aContent);
+                formData.append('aListPic', aListPic);
+                formData.append('aContentPic', aContentPic);
+                formData.append('aPublishTime', aPublishTime);
+                formData.append('aAuthorNum', aAuthorNum);
+                formData.append('aArticleType', aArticleType);
+                $.ajax({
+                    url: 'http://localhost:3000/admin/upArticle',
+                    type: "post",
+
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+
+                    data: formData,
+                    success: function (data) {
+                        alert("上传成功");
+                        console.log('成功！' + data);
+                    },
+                    error: function (err) {
+                        console.log('失败' + err.message);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-<div class="alert bg-primary" role="alert">文章管理&nbsp;&nbsp;>>&nbsp;发表文章</div>
+<div class="alert bg-primary" style="font-size: 20px" role="alert">文章管理&nbsp;&nbsp;>>&nbsp;发表文章</div>
+<div id="publishArticle">
+    <table id="paTable" border="1">
+        <tr>
+            <td>文章标题：</td>
+            <td><input type="text" placeholder="输入标题"></td>
+        </tr>
+        <tr>
+            <td>文章简介：</td>
+            <td><textarea name="" cols="100%" rows="3" placeholder="输入文章简介"></textarea></td>
+        </tr>
+
+        <tr>
+            <td>文章内容：</td>
+            <td><textarea name="" id="" cols="100%" rows="10" placeholder="输入文章内容"></textarea></td>
+        </tr>
+        <tr>
+            <td>文章列表图片：</td>
+            <td><input type="file" name="listPic"></td>
+        </tr>
+        <tr>
+            <td>文章内容图片：</td>
+            <td><input type="file" name="contentPic"></td>
+        </tr>
+        <tr>
+            <td>发表时间：</td>
+            <td><input type="date"></td>
+        </tr>
+        <tr>
+            <td>作者编号：</td>
+            <td><input type="text"></td>
+        </tr>
+        <tr class="aType">
+            <td>文章类别：</td>
+            <td>
+                <select name="">
+                    <option value="1">饮食小常识</option>
+                    <option value="2">养生妙方</option>
+                    <option value="3">饮食禁忌</option>
+                    <option value="4">美容瘦身</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="上传"></td>
+        </tr>
+    </table>
+
+</div>
 </body>
 </html>
