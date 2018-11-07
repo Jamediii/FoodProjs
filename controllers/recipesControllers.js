@@ -140,11 +140,12 @@ module.exports = {
     getUserAllInfo: async (ctx, next) => {
         try {
             let jsondata = await recipesDAO.getUserAllInfo();
-            // for(let i = 0; i < jsondata.length; i++ ) {
-            //     if (!/^http/.test(jsondata[i].dietPhoto)) {
-            //         jsondata[i].dietPhoto = `http://127.0.0.1:3000/images/dietPhoto/${jsondata[i].dietPhoto}`;
-            //     }
-            // }
+            for(let i = 0; i < jsondata.length; i++ ) {
+                if (!/^http/.test(jsondata[i].headPhoto)) {
+                    jsondata[i].headPhoto = `http://127.0.0.1:3000/images/userPhoto/${jsondata[i].headPhoto}`;
+                }
+
+            }
             ctx.body = {"code": 200, "message": "ok", data: jsondata}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}

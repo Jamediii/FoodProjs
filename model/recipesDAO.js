@@ -55,7 +55,7 @@ class RECIPES {
 
     //获取上传了菜谱，且有菜谱通过审核的用户信息
     getUserAllInfo(){
-        return DAO('select dietId,accountName,headPhoto,COUNT(1) as recipeSum from dietList LEFT JOIN userinfo ON dietList.userId = userinfo.userId and productState = "已审核" GROUP BY dietList.userId')
+        return DAO('select userinfo.userId,dietId,accountName,headPhoto,COUNT(1) as recipeSum from dietList LEFT JOIN userinfo ON dietList.userId = userinfo.userId and productState = "已审核" GROUP BY dietList.userId')
     }
 
 
