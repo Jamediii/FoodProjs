@@ -16,7 +16,6 @@ function query(sql, values) {
                 connection.query(sql,values,(err,rows)=>{
                     if(err){
                         reject(err);
-                        console.log(err);
                     }else{
                         resolve(rows);
                     }

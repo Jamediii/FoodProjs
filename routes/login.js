@@ -2,6 +2,7 @@ const router = require('koa-router')();
 const login = require("../controllers/login");
 router.prefix('/login');
 router.post('/', async (ctx, next) => {
+    console.log(ctx.request.body);
     await login.checkUser(ctx,next);
 });
 //获取登录成功的名字

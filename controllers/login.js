@@ -15,7 +15,7 @@ module.exports = {
             let result = {};
             var flag = false;
             for (var i = 0; i < data.length; i++) {
-                if (userPNo == data[i].phoneNo && pwd == data[i].password) {
+                if (userPNo == data[i].phoneNo && pwd == data[i].password || userPNo == data[i].userId && pwd == data[i].password) {
                     flag = true;
                     var userName=data[i].accountName;
                     var userId=data[i].userId;

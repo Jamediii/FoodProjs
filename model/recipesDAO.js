@@ -50,12 +50,12 @@ class RECIPES {
 
     //获取用户上传且通过审核的全部菜谱的简介信息
     getUseAllRecipe() {
-        return DAO('select dietId,accountName,headPhoto,dietTitle,dietPhoto,dietIntroduce,releaseTime from dietList,userinfo where dietList.userId = userinfo.userId and productState = "已审核"')
+        return DAO('select dietId,accountName,headPhoto,dietTitle,dietPhoto,dietIntroduce,releaseTime from dietlist,userinfo where dietList.userId = userinfo.userId and productState = "已审核" order by dietId desc')
     }
 
     //获取上传了菜谱，且有菜谱通过审核的用户信息
     getUserAllInfo(){
-        return DAO('select userinfo.userId,dietId,accountName,headPhoto,COUNT(1) as recipeSum from dietList LEFT JOIN userinfo ON dietList.userId = userinfo.userId and productState = "已审核" GROUP BY dietList.userId')
+        return DAO('select userinfo.userId,dietId,accountName,headPhoto,COUNT(1) as recipeSum from dietlist LEFT JOIN userinfo ON dietlist.userId = userinfo.userId and productState = "已审核" GROUP BY dietlist.userId order by  userinfo.userId desc')
     }
 
 
